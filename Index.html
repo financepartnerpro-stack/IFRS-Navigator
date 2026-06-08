@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS Complete Reference — Standards Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1f3c;
+    --navy-mid: #172a4e;
+    --navy-light: #1e3a6a;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f9f5ec;
+    --cream-dark: #f0e9d8;
+    --text: #1a1a2e;
+    --text-light: #4a5568;
+    --white: #ffffff;
+    --ias-accent: #2e7d6b;
+    --ias-light: #e8f5f2;
+    --ifric-accent: #7b3fa0;
+    --ifric-light: #f3ebfc;
+    --future-accent: #c0392b;
+    --future-light: #fdf0ef;
+    --border: #d4c9b0;
+    --shadow: 0 4px 24px rgba(13,31,60,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14pt;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: var(--white);
+    padding: 32px 40px 24px;
+    border-bottom: 4px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gold-light);
+  }
+
+  .header-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    margin-top: 3px;
+    font-weight: 300;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 8px;
+    padding: 8px 16px;
+    min-width: 280px;
+  }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--white);
+    font-size: 14pt;
+    font-family: 'Source Sans 3', sans-serif;
+    width: 100%;
+  }
+
+  .search-bar input::placeholder { color: rgba(255,255,255,0.5); }
+
+  .search-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+
+  /* ── TABS ── */
+  .tabs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-top: 20px;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14pt;
+    font-weight: 600;
+    padding: 13px 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  .tab-btn:hover { color: var(--navy); background: var(--cream-dark); }
+
+  .tab-btn.active {
+    color: var(--navy);
+    border-bottom-color: var(--gold);
+    background: var(--white);
+    border-radius: 6px 6px 0 0;
+  }
+
+  .tab-btn.future-tab.active { border-bottom-color: var(--future-accent); color: var(--future-accent); }
+
+  /* ── PANEL ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── SECTION INTRO ── */
+  .section-intro {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 22px 28px;
+    margin: 28px 0 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    border-left: 6px solid var(--gold);
+  }
+
+  .section-intro.ias { border-left-color: var(--ias-accent); background: #1a3830; }
+  .section-intro.ifric { border-left-color: var(--ifric-accent); background: #2d1840; }
+  .section-intro.future { border-left-color: var(--future-accent); background: #3d1a18; }
+
+  .section-intro-icon { font-size: 2.2rem; line-height: 1; flex-shrink: 0; }
+  .section-intro h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 4px; }
+  .section-intro p { font-size: 1rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(13,31,60,0.18); }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .card-header.ias { background: linear-gradient(135deg, #1a4a3e 0%, #2e7d6b 100%); border-bottom-color: #5dbfaa; }
+  .card-header.ifric { background: linear-gradient(135deg, #3d1f5e 0%, #7b3fa0 100%); border-bottom-color: #b07dd4; }
+  .card-header.future { background: linear-gradient(135deg, #7a1e1a 0%, #c0392b 100%); border-bottom-color: #e88080; }
+  .card-header.sic { background: linear-gradient(135deg, #2c4a6e 0%, #4a7aba 100%); border-bottom-color: #7aaae0; }
+
+  .card-code {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card-header.ias .card-code { color: #a0e8d8; }
+  .card-header.ifric .card-code { color: #d4a8f0; }
+  .card-header.future .card-code { color: #ffc0c0; }
+  .card-header.sic .card-code { color: #aacff5; }
+
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  /* ── CARD BODY (collapsed) ── */
+  .card-body {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+
+  .card-body.open {
+    max-height: 1200px;
+    padding: 20px 22px 22px;
+  }
+
+  /* ── CARD SUMMARY (always visible) ── */
+  .card-summary {
+    padding: 14px 20px;
+    font-size: 1rem;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--cream-dark);
+    line-height: 1.5;
+  }
+
+  /* ── DETAIL SECTIONS ── */
+  .detail-section { margin-bottom: 14px; }
+
+  .detail-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+
+  .card-header.ias ~ .card-body .detail-label,
+  .ias-body .detail-label { color: var(--ias-accent); }
+  .card-header.ifric ~ .card-body .detail-label,
+  .ifric-body .detail-label { color: var(--ifric-accent); }
+  .card-header.future ~ .card-body .detail-label,
+  .future-body .detail-label { color: var(--future-accent); }
+
+  .detail-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .detail-text ul { padding-left: 20px; }
+  .detail-text ul li { margin-bottom: 4px; }
+
+  .effective-badge {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #e8f4f0;
+    color: var(--ias-accent);
+    border: 1px solid #b2d8cf;
+  }
+
+  .effective-badge.future {
+    background: #fdf0ef;
+    color: var(--future-accent);
+    border-color: #f0b0ac;
+  }
+
+  .effective-badge.ifrs {
+    background: #eef2fa;
+    color: var(--navy-light);
+    border-color: #b0c0e0;
+  }
+
+  .toggle-icon {
+    margin-left: auto;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .card.open .toggle-icon { transform: rotate(180deg); }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-btn {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14pt;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+
+  .filter-btn.ias-filter.active { background: var(--ias-accent); border-color: var(--ias-accent); }
+  .filter-btn.ifric-filter.active { background: var(--ifric-accent); border-color: var(--ifric-accent); }
+  .filter-btn.future-filter.active { background: var(--future-accent); border-color: var(--future-accent); }
+
+  .result-count {
+    font-size: 14pt;
+    color: var(--text-light);
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: flex;
+    gap: 16px;
+    margin: 18px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 20px;
+    text-align: center;
+    flex: 1;
+    min-width: 130px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-label { font-size: 13pt; color: var(--text-light); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: #fffbf0;
+    border: 1px solid #e8d898;
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14pt;
+    color: #6b5a1e;
+    margin: 18px 0;
+    line-height: 1.5;
+  }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+    font-size: 14pt;
+    display: none;
+  }
+
+  /* ── MAIN CONTENT WRAPPER ── */
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body { font-size: 14pt; }
+    header { padding: 20px; }
+    .header-title { font-size: 1.4rem; }
+    .tabs-container, .main-content { padding: 0 16px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .search-bar { min-width: 200px; }
+  }
+
+  /* ── DARK MODE ── */
+  body.dark-mode {
+    --cream: #141820;
+    --cream-dark: #1c2230;
+    --white: #1e2535;
+    --text: #e8e4d8;
+    --text-light: #9aa3b2;
+    --border: #2e3a50;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    background: var(--cream);
+    color: var(--text);
+  }
+  body.dark-mode .card { background: var(--white); border-color: var(--border); }
+  body.dark-mode .card-summary { color: var(--text-light); }
+  body.dark-mode .detail-label { color: var(--gold); }
+  body.dark-mode .detail-text { color: var(--text); }
+  body.dark-mode .filter-btn { background: #1c2230; color: #9aa3b2; border-color: #2e3a50; }
+  body.dark-mode .filter-btn:hover, body.dark-mode .filter-btn.active { background: var(--navy-light); color: #fff; }
+  body.dark-mode .section-intro { background: #101624; }
+  body.dark-mode .tabs-container { background: #141820; }
+  body.dark-mode .tab-btn { color: #9aa3b2; }
+  body.dark-mode .tab-btn:hover { background: #1c2230; color: #e8e4d8; }
+  body.dark-mode .tab-btn.active { background: #1e2535; color: #e8c97a; }
+
+  /* ── BOOKMARK BUTTON ── */
+  .bookmark-btn {
+    position: absolute;
+    top: 10px;
+    right: 48px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.4;
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 2px 4px;
+    z-index: 5;
+  }
+  .bookmark-btn:hover { opacity: 1; transform: scale(1.2); }
+  .bookmark-btn.bookmarked { opacity: 1; }
+  .card { position: relative; }
+
+  /* ── COPY CODE BUTTON ── */
+  .copy-code-btn {
+    font-size: 11pt;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .copy-code-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
+  .copy-code-btn.copied { background: #2e7d6b; border-color: #2e7d6b; color: #fff; }
+
+  /* ── TAB COUNT BADGE ── */
+  .tab-count {
+    display: inline-block;
+    background: rgba(201,168,76,0.18);
+    color: var(--gold);
+    border-radius: 10px;
+    font-size: 11pt;
+    padding: 1px 7px;
+    margin-left: 5px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+  .tab-btn.active .tab-count { background: rgba(201,168,76,0.3); }
+
+  /* ── BACK TO TOP ── */
+  #backToTop {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    background: var(--navy);
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  #backToTop:hover { transform: translateY(-3px); }
+  #backToTop.visible { display: flex; }
+
+  /* ── BOOKMARKS PANEL ── */
+  #bookmarkPanel {
+    display: none;
+    position: fixed;
+    top: 0; right: 0;
+    width: 340px;
+    height: 100vh;
+    background: var(--white, #fff);
+    border-left: 3px solid var(--gold);
+    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+    z-index: 500;
+    overflow-y: auto;
+    padding: 24px 20px;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  #bookmarkPanel.open { display: block; }
+  .bm-header { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .bm-item { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: background 0.15s; font-size: 13pt; }
+  .bm-item:hover { background: var(--cream-dark); }
+  .bm-code { font-weight: 700; color: var(--navy); font-size: 12pt; }
+  .bm-title { color: var(--text-light); font-size: 12pt; margin-top: 2px; }
+  .bm-empty { color: var(--text-light); font-style: italic; text-align: center; padding: 40px 0; }
+  body.dark-mode #bookmarkPanel { background: #1e2535; }
+  body.dark-mode .bm-item { border-color: #2e3a50; }
+  body.dark-mode .bm-item:hover { background: #141820; }
+  body.dark-mode .bm-code { color: var(--gold); }
+
+  /* ── KEYBOARD SHORTCUT HINT ── */
+  .kbd-hint { font-size: 11pt; color: rgba(255,255,255,0.4); margin-left: 8px; }
+  .kbd-hint kbd { background: rgba(255,255,255,0.15); border-radius: 3px; padding: 1px 5px; font-family: monospace; font-size: 11pt; }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    header { position: static !important; }
+    .tabs-container { display: none !important; }
+    #backToTop, #bookmarkPanel, .toolbar-row { display: none !important; }
+    .panel { display: block !important; }
+    .card-body { display: block !important; max-height: none !important; overflow: visible !important; }
+    .card { break-inside: avoid; page-break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .panel:not(.active) .cards-grid { display: none; }
+  }
+
+  /* ── HIGHLIGHT SEARCH MATCH ── */
+  mark.search-hl { background: #ffe066; border-radius: 2px; padding: 0 2px; color: #1a1a2e; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-title">⚖ IFRS Standards Navigator</div>
+      <div class="header-sub">Complete IFRS · IAS · IFRIC · SIC — Current &amp; Forthcoming 2026–2028</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="globalSearch" placeholder="Search any standard, topic…" oninput="globalSearchFn()">
+        <span class="kbd-hint"><kbd>Ctrl</kbd><kbd>K</kbd></span>
+      </div>
+      <button onclick="toggleBookmarkPanel()" title="Bookmarks" style="background:rgba(255,255,255,0.1);border:1px solid rgba(201,168,76,0.5);border-radius:8px;padding:8px 14px;color:var(--gold-light);cursor:pointer;font-size:1.1rem;" id="bmToggleBtn">🔖 <span id="bmCount" style="font-size:12pt;font-family:'Source Sans 3',sans-serif;"></span></button>
+      <button onclick="toggleDarkMode()" id="darkModeBtn" title="Toggle Dark Mode" style="background:rgba(255,255,255,0.1);border:1px solid rgba(201,168,76,0.5);border-radius:8px;padding:8px 14px;color:var(--gold-light);cursor:pointer;font-size:1.1rem;">🌙</button>
+      <button onclick="printCurrentTab()" title="Print current tab" style="background:rgba(255,255,255,0.1);border:1px solid rgba(201,168,76,0.5);border-radius:8px;padding:8px 14px;color:var(--gold-light);cursor:pointer;font-size:1.1rem;">🖨</button>
+    </div>
+  </div>
+</header>
+
+<!-- BOOKMARKS PANEL -->
+<div id="bookmarkPanel">
+  <div class="bm-header">
+    🔖 Bookmarks
+    <button onclick="toggleBookmarkPanel()" style="background:none;border:none;cursor:pointer;font-size:1.3rem;color:#888;">✕</button>
+  </div>
+  <div id="bmList"><div class="bm-empty">No bookmarks yet.<br>Click the 🔖 icon on any card to save it here.</div></div>
+</div>
+
+<div class="tabs-container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ifrs',event)">📘 IFRS Standards <span class="tab-count" id="cnt-ifrs"></span></button>
+    <button class="tab-btn" onclick="switchTab('ias',event)">📗 IAS Standards <span class="tab-count" id="cnt-ias"></span></button>
+    <button class="tab-btn" onclick="switchTab('ifric',event)">📙 IFRIC Interpretations <span class="tab-count" id="cnt-ifric"></span></button>
+    <button class="tab-btn" onclick="switchTab('sic',event)">📒 SIC Interpretations <span class="tab-count" id="cnt-sic"></span></button>
+    <button class="tab-btn future-tab" onclick="switchTab('future',event)">🔮 Forthcoming 2026–2028 <span class="tab-count" id="cnt-future"></span></button>
+    <button class="tab-btn" onclick="switchTab('qa',event)" style="border-bottom-color:#2e7d6b;">❓ Q&amp;A Reference <span class="tab-count" id="cnt-qa"></span></button>
+  </div>
+  <div class="toolbar-row" style="display:flex;gap:10px;padding:12px 0 4px;flex-wrap:wrap;align-items:center;">
+    <button onclick="expandAll()" style="font-size:13pt;padding:7px 20px;border-radius:6px;border:1px solid #c9a84c;background:#0d1f3c;color:#e8c97a;cursor:pointer;font-weight:600;">▼ Expand All</button>
+    <button onclick="collapseAll()" style="font-size:13pt;padding:7px 20px;border-radius:6px;border:1px solid #c9a84c;background:#0d1f3c;color:#e8c97a;cursor:pointer;font-weight:600;">▲ Collapse All</button>
+    <span style="font-size:13pt;color:#4a5568;margin-left:8px;" id="toolbarHint">Click any card to expand · 🔖 to bookmark</span>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<div class="main-content">
+
+  <!-- ═══════════════════════════════════════════════
+       IFRS PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-ifrs" class="panel active">
+    <div class="section-intro">
+      <div class="section-intro-icon">📘</div>
+      <div>
+        <h2>IFRS Standards</h2>
+        <p>International Financial Reporting Standards issued by the IASB. Currently 17 active IFRS standards govern recognition, measurement, presentation, and disclosure of financial information.</p>
+      </div>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-box"><div class="stat-num">17</div><div class="stat-label">Active IFRS</div></div>
+      <div class="stat-box"><div class="stat-num">IFRS 1</div><div class="stat-label">First Standard</div></div>
+      <div class="stat-box"><div class="stat-num">IFRS 19</div><div class="stat-label">Latest Issued</div></div>
+      <div class="stat-box"><div class="stat-num">2025</div><div class="stat-label">Ref. Year</div></div>
+    </div>
+    <div class="disclaimer">⚠ <strong>Verify with current IASB sources.</strong> Standards are subject to amendment. Always consult the official IFRS Foundation consolidated version and confirm effective dates with your jurisdiction's regulatory authority.</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCards('ifrs','all',this)">All</button>
+      <button class="filter-btn" onclick="filterCards('ifrs','financial',this)">Financial Instruments</button>
+      <button class="filter-btn" onclick="filterCards('ifrs','assets',this)">Assets & Leases</button>
+      <button class="filter-btn" onclick="filterCards('ifrs','revenue',this)">Revenue & Contracts</button>
+      <button class="filter-btn" onclick="filterCards('ifrs','reporting',this)">Reporting & Disclosure</button>
+      <button class="filter-btn" onclick="filterCards('ifrs','insurance',this)">Insurance</button>
+      <span class="result-count" id="ifrs-count"></span>
+    </div>
+    <div id="no-results-ifrs" class="no-results">No matching standards found.</div>
+    <div class="cards-grid" id="grid-ifrs">
+
+      <!-- IFRS 1 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 1</span>
+          <span class="card-title">First-time Adoption of International Financial Reporting Standards</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Provides guidance for entities adopting IFRS for the first time, specifying how to transition from previous GAAP.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Objective</div>
+            <div class="detail-text">Ensure that an entity's first IFRS financial statements contain high-quality information that is transparent and comparable over all periods presented, provide a suitable starting point for accounting under IFRS, and can be generated at a cost that does not exceed the benefits.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Opening IFRS statement of financial position at the date of transition</li>
+              <li>Retrospective application of IFRS effective at the end of the first IFRS reporting period</li>
+              <li>Mandatory exceptions and optional exemptions from full retrospective application</li>
+              <li>Reconciliation disclosures from previous GAAP to IFRS for equity, comprehensive income, and cash flows</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 July 2004 (amended periodically)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 2 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 2</span>
+          <span class="card-title">Share-based Payment</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Prescribes financial reporting for share-based payment transactions including equity-settled, cash-settled, and choice arrangements.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Objective</div>
+            <div class="detail-text">Specify financial reporting requirements for transactions in which an entity receives or acquires goods or services as consideration for equity instruments, or incurs liabilities based on the price of equity instruments.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li><strong>Equity-settled:</strong> Measure at grant-date fair value of equity instruments; recognise over vesting period</li>
+              <li><strong>Cash-settled (SARs):</strong> Remeasure liability at fair value each reporting date until settlement</li>
+              <li><strong>Choice transactions:</strong> Bifurcate if entity has the choice; recognise liability component first</li>
+              <li>Non-market vesting conditions: adjust expense; market conditions: bake into grant-date fair value</li>
+              <li>Modifications: recognise incremental fair value at modification date</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2005</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 3 -->
+      <div class="card" data-tags="reporting assets" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 3</span>
+          <span class="card-title">Business Combinations</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Specifies the acquisition method for accounting for business combinations, including goodwill recognition and measurement.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Objective</div>
+            <div class="detail-text">Improve the relevance, reliability, and comparability of information about business combinations and their effects.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Acquisition method: identify acquirer, determine acquisition date, recognise and measure identifiable assets/liabilities and NCI</li>
+              <li>Goodwill = consideration transferred + NCI + fair value of prior interest − net identifiable assets</li>
+              <li>Bargain purchase (negative goodwill): recognised in profit or loss</li>
+              <li>Contingent consideration measured at fair value at acquisition date</li>
+              <li>Transaction costs expensed (not capitalised)</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 July 2009 (revised)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 4 -->
+      <div class="card" data-tags="insurance" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 4</span>
+          <span class="card-title">Insurance Contracts (Superseded by IFRS 17)</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Superseded by IFRS 17 effective 1 January 2023. IFRS 4 allowed diverse accounting practices; largely no longer applicable.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Status</div>
+            <div class="detail-text">IFRS 4 has been superseded by IFRS 17 for annual periods beginning on or after 1 January 2023. Entities should now apply IFRS 17 for all insurance contract accounting.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Historical Scope</div>
+            <div class="detail-text">Permitted entities to continue their existing accounting policies for insurance contracts while imposing limited improvements and disclosure requirements as an interim measure pending IFRS 17.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Status</div>
+            <div class="detail-text"><span class="effective-badge future">Superseded — IFRS 17 applies from 1 Jan 2023</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 5 -->
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 5</span>
+          <span class="card-title">Non-current Assets Held for Sale and Discontinued Operations</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Governs classification, measurement, and presentation of non-current assets (or disposal groups) held for sale and discontinued operations.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Classify as held for sale when: available for immediate sale in present condition + sale is highly probable within 12 months</li>
+              <li>Measure at lower of carrying amount or fair value less costs to sell</li>
+              <li>Cease depreciation/amortisation on classification</li>
+              <li>Present as a single line item on the statement of financial position</li>
+              <li>Discontinued operations: separate P&amp;L presentation; comparative restatement required</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2005</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 6 -->
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 6</span>
+          <span class="card-title">Exploration for and Evaluation of Mineral Resources</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Provides limited guidance on accounting for exploration and evaluation expenditures, pending a comprehensive standard.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Entities may develop an accounting policy for E&amp;E assets using the hierarchy in IAS 8</li>
+              <li>E&amp;E assets classified as tangible or intangible based on nature</li>
+              <li>Apply impairment test when facts suggest carrying amount may exceed recoverable amount</li>
+              <li>Disclose: policies, amounts recognised, and impairment losses/reversals</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2006</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 7 -->
+      <div class="card" data-tags="financial reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 7</span>
+          <span class="card-title">Financial Instruments: Disclosures</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Requires disclosures that enable users to evaluate the significance of financial instruments and associated risks.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Key Disclosure Areas</div>
+            <div class="detail-text"><ul>
+              <li><strong>Significance of financial instruments:</strong> carrying amounts by category, fair value hierarchy, interest income/expense</li>
+              <li><strong>Credit risk:</strong> maximum exposure, credit quality, collateral, impairment analysis, concentration</li>
+              <li><strong>Liquidity risk:</strong> maturity analysis of financial liabilities</li>
+              <li><strong>Market risk:</strong> sensitivity analysis for each type of market risk</li>
+              <li>Transfer of financial assets; offsetting; hedge accounting disclosures</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2007</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 8 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 8</span>
+          <span class="card-title">Operating Segments</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Requires entities to disclose information based on internal management reporting — the "management approach" to segment reporting.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Identify operating segments based on internal reports reviewed by chief operating decision maker (CODM)</li>
+              <li>Aggregation criteria: similar economic characteristics and qualitative factors</li>
+              <li>Quantitative thresholds for reportable segments (10% of combined revenue/profit/assets)</li>
+              <li>Reconcile segment totals to financial statements</li>
+              <li>Entity-wide disclosures: revenues by product/service, geography, and major customer</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2009</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 9 -->
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 9</span>
+          <span class="card-title">Financial Instruments</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Covers classification and measurement of financial instruments, the expected credit loss (ECL) impairment model, and hedge accounting.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Three Pillars</div>
+            <div class="detail-text"><ul>
+              <li><strong>Classification &amp; Measurement:</strong> Amortised cost, FVOCI, or FVTPL based on business model and SPPI test</li>
+              <li><strong>Impairment (ECL Model):</strong> 3-stage model — 12-month ECL → lifetime ECL (significant credit deterioration) → credit-impaired. Applies to loans, receivables, lease receivables, contract assets</li>
+              <li><strong>Hedge Accounting:</strong> Fair value hedges, cash flow hedges, net investment hedges; closer alignment with risk management</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Change from IAS 39</div>
+            <div class="detail-text">Replaced the incurred-loss model with forward-looking ECL, requiring earlier recognition of credit losses.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2018</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 10 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 10</span>
+          <span class="card-title">Consolidated Financial Statements</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Establishes principles for presenting consolidated financial statements, with a single control model for all entities.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Control Model</div>
+            <div class="detail-text">An investor controls an investee when it has: (1) power over the investee; (2) exposure/rights to variable returns; and (3) ability to use power to affect those returns. All three elements must be present simultaneously.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Consolidate all subsidiaries (entities controlled by the parent)</li>
+              <li>Uniform accounting policies for like transactions</li>
+              <li>Non-controlling interests presented within equity</li>
+              <li>Investment entities exception: measure subsidiaries at FVTPL instead of consolidating</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2013</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 11 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 11</span>
+          <span class="card-title">Joint Arrangements</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Classifies joint arrangements as joint operations or joint ventures, each with distinct accounting treatment.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Classification</div>
+            <div class="detail-text"><ul>
+              <li><strong>Joint Operation:</strong> Parties have rights to assets and obligations for liabilities — recognise share of assets, liabilities, revenues, expenses</li>
+              <li><strong>Joint Venture:</strong> Parties have rights to the net assets — apply equity method per IAS 28</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Change</div>
+            <div class="detail-text">Eliminated the proportionate consolidation method previously available for jointly controlled entities under IAS 31.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2013</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 12 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 12</span>
+          <span class="card-title">Disclosure of Interests in Other Entities</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Requires comprehensive disclosures about interests in subsidiaries, joint arrangements, associates, and unconsolidated structured entities.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Key Disclosure Requirements</div>
+            <div class="detail-text"><ul>
+              <li>Significant judgements and assumptions in determining control/significant influence</li>
+              <li>Information about composition of the group; restrictions on assets/liabilities</li>
+              <li>Nature and risks of interests in unconsolidated structured entities</li>
+              <li>Summarised financial information for material subsidiaries and equity-method investees</li>
+              <li>NCI interests: nature, proportion, summarised financials, dividends paid</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2013</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 13 -->
+      <div class="card" data-tags="financial reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 13</span>
+          <span class="card-title">Fair Value Measurement</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Defines fair value, establishes a single IFRS framework for measuring fair value, and requires disclosures about fair value measurements.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Fair Value Definition</div>
+            <div class="detail-text">The price that would be received to sell an asset or paid to transfer a liability in an orderly transaction between market participants at the measurement date (exit price).</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Fair Value Hierarchy</div>
+            <div class="detail-text"><ul>
+              <li><strong>Level 1:</strong> Quoted prices in active markets for identical assets/liabilities</li>
+              <li><strong>Level 2:</strong> Observable inputs other than Level 1 (comparable transactions, yield curves)</li>
+              <li><strong>Level 3:</strong> Unobservable inputs (entity's own assumptions, DCF models)</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2013</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 14 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 14</span>
+          <span class="card-title">Regulatory Deferral Accounts</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Interim standard permitting first-time IFRS adopters in rate-regulated industries to continue their previous GAAP accounting for regulatory deferral balances.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Scope</div>
+            <div class="detail-text">Only available to first-time IFRS adopters that recognised regulatory deferral account balances under their previous GAAP. Not available to entities already applying IFRS.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2016 (interim — superseded by Rate-regulated Activities project)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 15 -->
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 15</span>
+          <span class="card-title">Revenue from Contracts with Customers</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Single comprehensive revenue recognition model — the 5-step model — replacing IAS 18 and IAS 11.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Five-Step Model</div>
+            <div class="detail-text"><ul>
+              <li><strong>Step 1:</strong> Identify the contract with a customer</li>
+              <li><strong>Step 2:</strong> Identify the performance obligations in the contract</li>
+              <li><strong>Step 3:</strong> Determine the transaction price (including variable consideration)</li>
+              <li><strong>Step 4:</strong> Allocate the transaction price to performance obligations (relative standalone selling price)</li>
+              <li><strong>Step 5:</strong> Recognise revenue when (or as) each performance obligation is satisfied</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Over Time vs Point in Time</div>
+            <div class="detail-text">Revenue recognised over time if: customer simultaneously receives and consumes benefits; entity creates/enhances customer-controlled asset; OR no alternative use and right to payment for work to date.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2018</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 16 -->
+      <div class="card" data-tags="assets revenue" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 16</span>
+          <span class="card-title">Leases</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Requires lessees to recognise a right-of-use asset and lease liability for virtually all leases, eliminating the operating lease "off balance sheet" treatment.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Lessee Accounting</div>
+            <div class="detail-text"><ul>
+              <li>Recognise ROU asset (initially at cost = present value of lease payments + initial direct costs + make-good obligations) and lease liability</li>
+              <li>Subsequently: depreciate ROU asset; unwind lease liability using effective interest method</li>
+              <li>Exemptions: short-term leases (≤12 months) and low-value assets (e.g., &lt;USD 5,000)</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Lessor Accounting</div>
+            <div class="detail-text">Unchanged from IAS 17: classify as finance lease or operating lease based on risks/rewards transfer.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2019</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 17 -->
+      <div class="card" data-tags="insurance" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 17</span>
+          <span class="card-title">Insurance Contracts</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Comprehensive standard for insurance contracts — replaces IFRS 4. Uses current measurement of insurance liabilities and a building block approach.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Measurement Models</div>
+            <div class="detail-text"><ul>
+              <li><strong>General Model (GMM):</strong> Fulfilment cash flows (PV of future cash flows + risk adjustment) + Contractual Service Margin (unearned profit)</li>
+              <li><strong>Premium Allocation Approach (PAA):</strong> Simplified model for short-duration contracts (≤1 year or approximates GMM)</li>
+              <li><strong>Variable Fee Approach (VFA):</strong> For direct participation contracts</li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Concepts</div>
+            <div class="detail-text">CSM represents unearned profit recognised over the coverage period. Experience adjustments, changes in assumptions, and investment returns are carefully disaggregated in the income statement.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge ifrs">1 January 2023</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 18 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 18</span>
+          <span class="card-title">Presentation and Disclosure in Financial Statements</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Replaces IAS 1. Introduces new structure for the income statement with defined categories and management-defined performance measures (MPMs).</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">New Income Statement Structure</div>
+            <div class="detail-text"><ul>
+              <li>Five defined categories: Operating; Investing; Financing — integral to main business; Financing — not integral; Income tax</li>
+              <li>Two new required subtotals: <strong>Operating profit</strong> and <strong>Profit before financing and income tax</strong></li>
+            </ul></div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Management Performance Measures (MPMs)</div>
+            <div class="detail-text">Entities must disclose MPMs used in public communications (e.g., adjusted EBITDA) with a labelled reconciliation to IFRS line items and explanations of adjustments.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge future">1 January 2027 (early adoption permitted)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IFRS 19 -->
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-code">IFRS 19</span>
+          <span class="card-title">Subsidiaries without Public Accountability: Disclosures</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-summary">Permits eligible subsidiaries to apply reduced disclosure requirements while still applying the full IFRS recognition and measurement requirements.</div>
+        <div class="card-body">
+          <div class="detail-section">
+            <div class="detail-label">Scope</div>
+            <div class="detail-text">Available to subsidiaries that: (a) do not have public accountability; (b) have an ultimate or intermediate parent that produces publicly available IFRS consolidated financial statements; and (c) have explicit shareholder approval.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Key Relief</div>
+            <div class="detail-text">Reduced disclosures across many standards (e.g., IFRS 7, IFRS 13, IAS 19, IAS 36) — recognition and measurement remains full IFRS.</div>
+          </div>
+          <div class="detail-section">
+            <div class="detail-label">Effective Date</div>
+            <div class="detail-text"><span class="effective-badge future">1 January 2027 (early adoption permitted)</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grid-ifrs -->
+  </div><!-- /panel-ifrs -->
+
+  <!-- ═══════════════════════════════════════════════
+       IAS PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-ias" class="panel">
+    <div class="section-intro ias">
+      <div class="section-intro-icon">📗</div>
+      <div>
+        <h2>IAS Standards</h2>
+        <p>International Accounting Standards — the predecessor standards to IFRS, many still in force. Issued by the IASC (predecessor to IASB) and subsequently maintained and amended by the IASB.</p>
+      </div>
+    </div>
+    <div class="disclaimer">⚠ Several IAS standards have been superseded or withdrawn. Active status is indicated on each card. Always verify current applicability with the IFRS Foundation.</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCards('ias','all',this)">All</button>
+      <button class="filter-btn" onclick="filterCards('ias','assets',this)">Assets</button>
+      <button class="filter-btn" onclick="filterCards('ias','financial',this)">Financial Instruments</button>
+      <button class="filter-btn" onclick="filterCards('ias','reporting',this)">Reporting</button>
+      <button class="filter-btn" onclick="filterCards('ias','employee',this)">Employee Benefits</button>
+      <span class="result-count" id="ias-count"></span>
+    </div>
+    <div id="no-results-ias" class="no-results">No matching standards found.</div>
+    <div class="cards-grid" id="grid-ias">
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 1</span><span class="card-title">Presentation of Financial Statements (Superseded by IFRS 18 from 2027)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Sets overall requirements for financial statements including structure, minimum content, and overriding concepts.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Core Requirements</div><div class="detail-text"><ul><li>Complete set of financial statements: SFP, P&amp;L/OCI, SOCE, SCF, notes</li><li>Fair presentation and going concern assessment</li><li>Accrual basis (except cash flow statement)</li><li>Materiality; aggregation; offsetting prohibition</li><li>Comparative information for at least one prior period</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Status</div><div class="detail-text"><span class="effective-badge future">Superseded by IFRS 18 — effective 1 Jan 2027</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 2</span><span class="card-title">Inventories</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting treatment for inventories, including cost determination and the lower of cost and NRV principle.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Measure at lower of cost and net realisable value (NRV)</li><li>Cost includes purchase price, conversion costs, other costs to bring to present location/condition</li><li>Cost formulas: FIFO or weighted average (LIFO prohibited under IFRS)</li><li>Disclose: accounting policy, carrying amount by category, write-downs and reversals</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 7</span><span class="card-title">Statement of Cash Flows</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Requires entities to provide information about historical changes in cash and cash equivalents via a statement of cash flows.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Three Activity Categories</div><div class="detail-text"><ul><li><strong>Operating:</strong> Principal revenue-producing activities — direct method (preferred) or indirect method</li><li><strong>Investing:</strong> Acquisition/disposal of long-term assets and other investments</li><li><strong>Financing:</strong> Changes in equity capital and borrowings</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 1994</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 8</span><span class="card-title">Accounting Policies, Changes in Accounting Estimates and Errors</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes criteria for selecting and changing accounting policies, and the treatment of changes in estimates and corrections of errors.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Principles</div><div class="detail-text"><ul><li>Accounting policy changes: retrospective application (restate comparatives)</li><li>Changes in estimates: prospective application</li><li>Prior period errors: retrospective restatement (correction in earliest comparative period possible)</li><li>Hierarchy for policy selection: specific IFRS → analogous IFRS → IASB Framework → other bodies' guidance</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 10</span><span class="card-title">Events after the Reporting Period</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Distinguishes adjusting from non-adjusting events after the reporting period and prescribes disclosure requirements.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Distinction</div><div class="detail-text"><ul><li><strong>Adjusting events:</strong> Provide evidence of conditions existing at reporting date → adjust financial statements</li><li><strong>Non-adjusting events:</strong> Arise after the reporting date → disclose nature and estimated financial effect</li><li>Going concern assessment must consider post-period information</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 12</span><span class="card-title">Income Taxes</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting for current and deferred income taxes using the balance sheet liability method.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Deferred tax: temporary differences between carrying amount of assets/liabilities and their tax bases</li><li>Deferred tax liabilities (DTL): recognise for all taxable temporary differences (limited exceptions)</li><li>Deferred tax assets (DTA): recognise to the extent probable that taxable profit will be available</li><li>Measure using enacted/substantively enacted tax rates at reporting date</li><li>Pillar Two amendments: disclosure requirements for Pillar Two exposure (2023 temporary exception)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 1998 (amended continuously)</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 16</span><span class="card-title">Property, Plant and Equipment</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting treatment for property, plant and equipment including recognition, measurement (cost or revaluation), and depreciation.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Two Measurement Models</div><div class="detail-text"><ul><li><strong>Cost model:</strong> Carried at cost less accumulated depreciation and impairment losses</li><li><strong>Revaluation model:</strong> Carried at revalued amount (fair value at date of revaluation) less subsequent depreciation and impairment</li><li>Revaluation surplus recognised in OCI; transferred to retained earnings on derecognition or use</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Component Approach</div><div class="detail-text">Each significant part of an asset with a different useful life or depreciation method is depreciated separately.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 17</span><span class="card-title">Leases (Superseded by IFRS 16)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Superseded by IFRS 16. Distinguished finance leases from operating leases based on transfer of risks and rewards.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Status</div><div class="detail-text"><span class="effective-badge future">Superseded by IFRS 16 — effective 1 Jan 2019</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 19</span><span class="card-title">Employee Benefits</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting and disclosure for employee benefits including short-term benefits, post-employment benefits, other long-term benefits, and termination benefits.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Defined Benefit Plans</div><div class="detail-text"><ul><li>Net defined benefit liability/asset = present value of DBO − fair value of plan assets</li><li>Current service cost and net interest recognised in P&amp;L</li><li>Remeasurements (actuarial gains/losses; return on plan assets) recognised immediately in OCI — not recycled</li><li>Requires actuarial valuation using projected unit credit method</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Defined Contribution Plans</div><div class="detail-text">Contributions recognised as an expense when employees render service. No further obligation beyond contributions.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2013 (revised)</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 20</span><span class="card-title">Accounting for Government Grants and Disclosure of Government Assistance</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting for, and disclosure of, government grants and assistance.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Grants not recognised until there is reasonable assurance of compliance and receipt</li><li>Grants related to assets: deduct from asset (net presentation) OR deferred income recognised over asset life</li><li>Grants related to income: recognised in P&amp;L on a systematic basis matching related costs</li><li>Non-monetary grants: measured at fair value (or nominal value permitted)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 1984 (amended)</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 21</span><span class="card-title">The Effects of Changes in Foreign Exchange Rates</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes how to include foreign currency transactions and foreign operations in financial statements, and how to translate financial statements into a presentation currency.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Concepts</div><div class="detail-text"><ul><li><strong>Functional currency:</strong> Currency of the primary economic environment; determined by specific indicators</li><li>Monetary items retranslated at closing rate; non-monetary items at historical rate (cost) or closing rate (fair value)</li><li>Exchange differences: P&amp;L (monetary items) or OCI (net investment in foreign operations — FCTR)</li><li>Translation to presentation currency: assets/liabilities at closing rate; income/expenses at transaction date rate (or average)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 23</span><span class="card-title">Borrowing Costs</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Requires capitalisation of borrowing costs attributable to the acquisition, construction, or production of a qualifying asset.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Capitalise borrowing costs directly attributable to a qualifying asset (one that necessarily takes a substantial period of time to get ready)</li><li>Specific borrowings: actual costs less investment income on temporary reinvestment</li><li>General borrowings: capitalisation rate × average carrying amount of qualifying asset</li><li>Capitalisation commences when: expenditures incurred + borrowing costs incurred + activities in progress</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2009</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 24</span><span class="card-title">Related Party Disclosures</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Requires disclosures to draw attention to the possibility that financial position and results may have been affected by related party transactions.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Related Party Definition</div><div class="detail-text">Broad definition encompassing: parent; subsidiaries; associates; joint ventures; key management personnel (KMP); close family members of KMP; entities controlled/jointly controlled by KMP or close family; post-employment benefit plans.</div></div>
+          <div class="detail-section"><div class="detail-label">Required Disclosures</div><div class="detail-text">Nature of relationship; description and amount of transactions; outstanding balances (including terms and conditions, guarantees); provisions for doubtful debts; KMP compensation by category.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2011</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 27</span><span class="card-title">Separate Financial Statements</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting for investments in subsidiaries, joint ventures, and associates in an entity's separate (non-consolidated) financial statements.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Measurement Options</div><div class="detail-text">Investments may be carried at: (a) cost; (b) in accordance with IFRS 9; or (c) using equity method (as described in IAS 28). Policy applied consistently per category of investment.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2013</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 28</span><span class="card-title">Investments in Associates and Joint Ventures</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes the equity method of accounting for investments in associates and joint ventures.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Equity Method</div><div class="detail-text"><ul><li>Initially recognised at cost; subsequently adjusted for investor's share of post-acquisition profit/loss and OCI</li><li>Significant influence: presumed at ≥20% voting power (rebuttable)</li><li>Impairment assessed per IAS 36 (whole investment as a single asset)</li><li>Discontinued when significant influence is lost</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2013</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 29</span><span class="card-title">Financial Reporting in Hyperinflationary Economies</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes restatement of financial statements in the functional currency of a hyperinflationary economy using a general price index.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Hyperinflation Indicators</div><div class="detail-text">Cumulative inflation over 3 years approaching or exceeding 100%; population prefers non-monetary assets or stable foreign currency; interest rates, wages, prices reflect price index; sales prices quoted in stable foreign currency.</div></div>
+          <div class="detail-section"><div class="detail-label">Restatement Approach</div><div class="detail-text">Restate non-monetary items using change in general price index; monetary items not restated; gain/loss on net monetary position recognised in P&amp;L.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 1990</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 32</span><span class="card-title">Financial Instruments: Presentation</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Establishes principles for presenting financial instruments as liabilities or equity, and for offsetting financial assets and liabilities.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Liability vs Equity</div><div class="detail-text">A financial instrument is equity only if the issuer has no contractual obligation to deliver cash/financial assets, and (if settled in own equity instruments) it will be settled by a fixed amount of cash for a fixed number of equity instruments (fixed-for-fixed).</div></div>
+          <div class="detail-section"><div class="detail-label">Offsetting</div><div class="detail-text">Offset only when: legally enforceable right to set off AND intention to settle net or simultaneously.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 33</span><span class="card-title">Earnings per Share</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes principles for the determination and presentation of basic and diluted EPS for listed entities.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Calculations</div><div class="detail-text"><ul><li><strong>Basic EPS:</strong> Profit or loss attributable to ordinary shareholders ÷ weighted average ordinary shares outstanding</li><li><strong>Diluted EPS:</strong> Adjust numerator and denominator for dilutive potential ordinary shares (options, warrants, convertibles)</li><li>Retrospective adjustment for bonus issues, stock splits, share consolidations</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 34</span><span class="card-title">Interim Financial Reporting</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes minimum content of interim financial reports and principles for recognition and measurement in interim periods.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Condensed or complete financial statements for interim periods</li><li>Discrete approach for most items; some items estimated on annual basis (income taxes)</li><li>Comparative periods specified for each financial statement</li><li>Significant events and transactions since last annual report: disclose in notes</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 1999</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 36</span><span class="card-title">Impairment of Assets</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Ensures assets are not carried above their recoverable amount, and prescribes impairment testing including for goodwill and intangibles with indefinite life.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Recoverable Amount</div><div class="detail-text">Higher of: (a) Fair value less costs of disposal (FVLCD); and (b) Value in use (VIU) — present value of expected future cash flows from the asset or CGU.</div></div>
+          <div class="detail-section"><div class="detail-label">CGU &amp; Goodwill</div><div class="detail-text">Goodwill allocated to Cash Generating Units (CGUs) or groups; tested annually for impairment (not only when indicators exist). Impairment losses: first reduce goodwill; then pro-rata across other assets. Reversal of goodwill impairment prohibited.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">31 March 2004</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="reporting" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 37</span><span class="card-title">Provisions, Contingent Liabilities and Contingent Assets</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Establishes recognition and measurement criteria for provisions, and disclosure requirements for contingent items.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Recognition Criteria (Provisions)</div><div class="detail-text"><ul><li>Present obligation (legal or constructive) as a result of past event</li><li>Probable outflow of resources (more likely than not)</li><li>Reliable estimate of the obligation</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Measurement</div><div class="detail-text">Best estimate of expenditure required to settle obligation; discount to present value if material; use expected value for large populations; most likely outcome for single obligation.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 July 1999</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 38</span><span class="card-title">Intangible Assets</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes recognition and measurement of intangible assets not covered by other standards, including internal development costs.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Recognition</div><div class="detail-text">Identifiable non-monetary asset without physical substance. Recognise when: probable future economic benefits AND cost can be reliably measured. Internally generated goodwill and brands: not recognised.</div></div>
+          <div class="detail-section"><div class="detail-label">Research vs Development</div><div class="detail-text">Research costs: always expense. Development costs: capitalise when 6 specific criteria all met (technical feasibility, intention, ability to use/sell, probable economic benefits, adequate resources, reliable measurement).</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">31 March 2004</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 40</span><span class="card-title">Investment Property</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting for property held to earn rentals or for capital appreciation (or both), separately from owner-occupied property.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Two Measurement Models</div><div class="detail-text"><ul><li><strong>Fair value model:</strong> Remeasure at fair value each reporting date; gains/losses to P&amp;L; no depreciation</li><li><strong>Cost model:</strong> Cost less accumulated depreciation and impairment (same as IAS 16); disclose fair value in notes</li><li>Policy must be applied to all investment property (except in very limited circumstances)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="assets" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">IAS 41</span><span class="card-title">Agriculture</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Prescribes accounting for biological assets and agricultural produce at the point of harvest.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Requirements</div><div class="detail-text"><ul><li>Biological assets measured at fair value less costs to sell at each reporting date (unless FV not reliably measurable)</li><li>Changes in FV less costs to sell recognised in P&amp;L</li><li>Agricultural produce at point of harvest: measured at fair value less costs to sell (cost for subsequent IAS 2 purposes)</li><li>Bearer plants: accounted for under IAS 16 (not IAS 41)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2003</span></div></div>
+        </div>
+      </div>
+
+    </div><!-- /grid-ias -->
+  </div><!-- /panel-ias -->
+
+  <!-- ═══════════════════════════════════════════════
+       IFRIC PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-ifric" class="panel">
+    <div class="section-intro ifric">
+      <div class="section-intro-icon">📙</div>
+      <div>
+        <h2>IFRIC Interpretations</h2>
+        <p>Interpretations issued by the IFRS Interpretations Committee (formerly IFRIC) to provide guidance on applying IFRS to specific issues not directly addressed by a standard.</p>
+      </div>
+    </div>
+    <div class="disclaimer">⚠ Several IFRIC interpretations have been withdrawn. Active status is indicated. Verify with the IFRS Foundation.</div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCards('ifric','all',this)">All</button>
+      <button class="filter-btn" onclick="filterCards('ifric','financial',this)">Financial</button>
+      <button class="filter-btn" onclick="filterCards('ifric','revenue',this)">Revenue &amp; Service</button>
+      <button class="filter-btn" onclick="filterCards('ifric','tax',this)">Tax</button>
+      <span class="result-count" id="ifric-count"></span>
+    </div>
+    <div id="no-results-ifric" class="no-results">No matching standards found.</div>
+    <div class="cards-grid" id="grid-ifric">
+
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 1</span><span class="card-title">Changes in Existing Decommissioning, Restoration and Similar Liabilities</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses accounting for changes in the measurement of a decommissioning or similar liability that has been included in the cost of an asset.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">When the related asset is measured at cost: add/deduct change in liability to/from asset cost. If deduction exceeds carrying amount of asset, excess recognised immediately in P&amp;L. If asset is measured at revaluation: changes treated as revaluation movements through OCI.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 September 2004</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 2</span><span class="card-title">Members' Shares in Co-operative Entities and Similar Instruments</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses the classification of members' shares in co-operative entities as liability or equity under IAS 32.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Principle</div><div class="detail-text">Members' shares are equity if the entity has an unconditional right to refuse redemption. Otherwise classified as financial liability. Restriction on redemption (e.g. minimum capital requirements) may allow equity classification for some shares.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 5</span><span class="card-title">Rights to Interests arising from Decommissioning, Restoration and Environmental Rehabilitation Funds</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses how a contributor should account for its interest in a fund set up to provide for future decommissioning.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Recognise obligation to pay decommissioning costs per IAS 37. Right to receive reimbursement from fund accounted for per IAS 39/IFRS 9 — not offset against liability. Apply IFRS 10/IAS 28/IAS 31 to determine if control or significant influence exists over fund.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2006</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 6</span><span class="card-title">Liabilities arising from Participating in a Specific Market — Waste Electrical and Electronic Equipment</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses when to recognise a liability for waste management under EU-type regulations for historical electrical equipment.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Obligating event is participation in the market during the measurement period, not manufacture of equipment. Liability recognised when obligating event occurs (typically annually as participation is measured).</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 December 2005</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 7</span><span class="card-title">Applying the Restatement Approach under IAS 29</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Provides guidance on applying IAS 29 when an economy first becomes hyperinflationary in a particular period.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">In the first period of hyperinflationary reporting: restate non-monetary assets and liabilities from dates of acquisition/incurrence; IAS 12 deferred tax items restated and then current-period income tax recognised.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 March 2006</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 10</span><span class="card-title">Interim Financial Reporting and Impairment</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses the interaction between IAS 34 and IAS 36/IFRS 9 on reversal of impairments recognised at an interim date.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Impairment losses recognised in interim periods for goodwill, or investments in equity instruments and financial assets at cost, must NOT be reversed at a subsequent balance sheet date. IAS 34 does not override IAS 36 and IFRS 9 on this point.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 November 2006</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 12</span><span class="card-title">Service Concession Arrangements</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses the accounting by private-sector operators involved in the provision of public services via service concession arrangements (PPPs).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Two Models</div><div class="detail-text"><ul><li><strong>Financial asset model:</strong> Operator has unconditional right to receive cash from grantor — recognise financial asset</li><li><strong>Intangible asset model:</strong> Operator has right to charge users — recognise intangible asset</li><li>Revenue and costs recognised per IFRS 15; construction/upgrade accounted for separately from operations</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2008</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="tax" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 14</span><span class="card-title">IAS 19 — The Limit on a Defined Benefit Asset, Minimum Funding Requirements and their Interaction</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Provides guidance on assessing the limit on the amount recognised as a defined benefit asset, and on the effect of minimum funding requirements (MFRs).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Economic benefit from refund or reduction in future contributions. MFR payments that create a prepayment: asset recognised to extent it will result in future economic benefit. Additional liability required if MFR creates an obligation exceeding the surplus.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2008</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="tax" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 16</span><span class="card-title">Hedges of a Net Investment in a Foreign Operation</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies the nature of the hedged risk, which entity in a group can hold the hedging instrument, and how to determine the amount reclassified to P&amp;L on disposal.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Clarifications</div><div class="detail-text"><ul><li>Hedged risk: foreign currency risk between functional currency of net investment and presentation currency of consolidated statements</li><li>Hedging instrument: can be held by any entity in the group (not only the parent)</li><li>On disposal: reclassify hedging gain/loss from FCTR to P&amp;L (same as reclassification of FCTR itself)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 October 2008</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 17</span><span class="card-title">Distributions of Non-cash Assets to Owners</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies how to account for distributions of non-cash assets (dividends in kind) to owners.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Dividend payable recognised at fair value of assets to be distributed. Difference between carrying amount of assets distributed and fair value: recognised in P&amp;L at settlement. If subsidiary distributed: apply IFRS 10 deconsolidation guidance.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 July 2009</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 19</span><span class="card-title">Extinguishing Financial Liabilities with Equity Instruments</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses accounting when an entity renegotiates the terms of a financial liability and issues equity instruments to the creditor to extinguish all or part of the liability.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Equity instruments issued measured at fair value (unless FV cannot be reliably measured — then at FV of liability extinguished). Difference between carrying amount of liability and FV of equity instruments: recognised in P&amp;L.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 July 2010</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="tax" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 20</span><span class="card-title">Stripping Costs in the Production Phase of a Surface Mine</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses the accounting for waste removal (stripping) costs incurred in open pit mining during the production phase.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Stripping activity asset recognised when: identifiable component of ore body is improved; future economic benefits are probable; costs attributable to that component can be measured reliably. Measured initially at cost; subsequently at cost or revaluation (consistent with related ore body component).</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2013</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 21</span><span class="card-title">Levies</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies when to recognise a liability to pay a levy imposed by a government under IAS 37, specifically addressing the obligating event.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Obligating event is the activity that triggers payment of the levy per the legislation. Liability recognised progressively (over the period) only if activity that triggers levy occurs over time. No liability recognised before the obligating event — not at the beginning of the annual period.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2014</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="revenue" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 22</span><span class="card-title">Foreign Currency Transactions and Advance Consideration</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses which exchange rate to use when recognising an asset, expense, or income when advance consideration is received/paid in a foreign currency.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">The date of the transaction (for the purpose of determining the exchange rate) is the date on which the entity initially recognises the non-monetary asset/liability arising from the advance consideration. Multiple advance payments: use exchange rate for each instalment separately.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2018</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" data-tags="tax" onclick="toggleCard(this)">
+        <div class="card-header ifric"><span class="card-code">IFRIC 23</span><span class="card-title">Uncertainty over Income Tax Treatments</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies how to apply the recognition and measurement requirements in IAS 12 when there is uncertainty over income tax treatments.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text"><ul><li>Consider whether to treat uncertain tax treatments separately or together</li><li>Assume tax authority will examine and has full knowledge of all information</li><li>Measurement: most likely amount OR expected value (probability-weighted) — whichever better predicts resolution</li><li>Reassess when facts and circumstances change</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 January 2019</span></div></div>
+        </div>
+      </div>
+
+    </div><!-- /grid-ifric -->
+  </div><!-- /panel-ifric -->
+
+  <!-- ═══════════════════════════════════════════════
+       SIC PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-sic" class="panel">
+    <div class="section-intro" style="border-left-color:#4a7aba;background:#1a2a4a;">
+      <div class="section-intro-icon">📒</div>
+      <div>
+        <h2>SIC Interpretations</h2>
+        <p>Standing Interpretations Committee interpretations — predecessors to IFRIC. Many have been withdrawn. Active SIC interpretations still in force are listed below.</p>
+      </div>
+    </div>
+    <div class="disclaimer">⚠ Most SIC interpretations have been withdrawn. Only currently active SIC interpretations are listed. Verify with the IFRS Foundation for current status.</div>
+    <div class="cards-grid" id="grid-sic">
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header sic"><span class="card-code">SIC-7</span><span class="card-title">Introduction of the Euro</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses the application of IAS 21 to the conversion of currencies of EU member states to the euro.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">The requirements of IAS 21 should be applied on introduction of the euro. In particular: conversion at the fixed rates does not give rise to exchange differences; cumulative translation differences in OCI are not recycled upon conversion of a subsidiary's functional currency to the euro.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 June 1998</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header sic"><span class="card-code">SIC-10</span><span class="card-title">Government Assistance — No Specific Relation to Operating Activities</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses government assistance that is not related to specific operating activities of an entity.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Government assistance that is not related to specific operating activities (e.g., incentives to operate in certain regions) should be recognised in profit or loss in the periods in which the entity qualifies for the assistance.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">1 August 1998</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header sic"><span class="card-code">SIC-25</span><span class="card-title">Income Taxes — Changes in the Tax Status of an Entity or its Shareholders</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses how a change in an entity's or its shareholders' tax status affects current and deferred tax.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Current and deferred tax consequences of a change in tax status should be included in profit or loss, unless relating to transactions/events recognised directly in equity. The tax change recognised in the period in which the change in tax status occurs.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">15 July 2000</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header sic"><span class="card-code">SIC-29</span><span class="card-title">Service Concession Arrangements: Disclosures</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses disclosure requirements for service concession arrangements (read with IFRIC 12).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Disclosures Required</div><div class="detail-text">Description of arrangement; significant terms; nature/extent of rights/obligations; changes during the period; and reconciliation of carrying amounts. Applied by both operators and grantors.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">31 December 2001</span></div></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header sic"><span class="card-code">SIC-32</span><span class="card-title">Intangible Assets — Web Site Costs</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses whether costs incurred in developing an entity's own web site should be recognised as an intangible asset.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Guidance</div><div class="detail-text">Planning stage costs: expensed. Application and infrastructure development, graphical design: capitalise if IAS 38 criteria met. Content development: depends on whether for advertising/promotional purposes (expense) or other capability (capitalise). Operating stage: expense as incurred.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge">25 March 2002</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-sic -->
+
+  <!-- ═══════════════════════════════════════════════
+       FORTHCOMING PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-future" class="panel">
+    <div class="section-intro future">
+      <div class="section-intro-icon">🔮</div>
+      <div>
+        <h2>Forthcoming Standards &amp; Amendments — 2026 to 2028</h2>
+        <p>Standards and amendments issued but not yet mandatory, or currently under development with expected effective dates in the 2026–2028 window. Early adoption may be permitted in certain cases.</p>
+      </div>
+    </div>
+    <div class="disclaimer">⚠ <strong>Important:</strong> Effective dates are subject to change. The IASB may defer, amend, or withdraw forthcoming standards. Always verify with the current IASB work plan at ifrs.org. Dates below reflect best available information as at mid-2025. Rules may have changed since then.</div>
+    <div class="stat-strip">
+      <div class="stat-box"><div class="stat-num" style="color:var(--future-accent)">2</div><div class="stat-label">Major New Standards</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--future-accent)">10+</div><div class="stat-label">Amendments</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--future-accent)">2027</div><div class="stat-label">Busiest Year</div></div>
+      <div class="stat-box"><div class="stat-num" style="color:var(--future-accent)">2028</div><div class="stat-label">Latest Window</div></div>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCards('future','all',this)">All</button>
+      <button class="filter-btn" onclick="filterCards('future','2026',this)">2026</button>
+      <button class="filter-btn" onclick="filterCards('future','2027',this)">2027</button>
+      <button class="filter-btn" onclick="filterCards('future','2028',this)">2028</button>
+      <span class="result-count" id="future-count"></span>
+    </div>
+    <div id="no-results-future" class="no-results">No matching standards found.</div>
+    <div class="cards-grid" id="grid-future">
+
+      <!-- IFRS 18 forthcoming -->
+      <div class="card" data-tags="2027" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS 18</span><span class="card-title">Presentation and Disclosure in Financial Statements</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Replaces IAS 1. Mandatory from 1 January 2027. The most significant change to income statement presentation in decades.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">What Changes</div><div class="detail-text"><ul><li>Five defined categories in P&amp;L: Operating; Investing (integral to main business); Investing (not integral); Financing (integral); Financing (not integral)</li><li>Two new mandatory subtotals: <strong>Operating profit/loss</strong> and <strong>Profit/loss before financing and income tax</strong></li><li>Management-defined Performance Measures (MPMs): mandatory labelled reconciliation to nearest IFRS subtotal</li><li>Enhanced aggregation/disaggregation guidance</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Key Preparatory Steps</div><div class="detail-text">Map existing P&amp;L line items to new categories; identify MPMs used in public communications; design new reconciliation schedules; update comparative periods.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2027 | Early adoption: permitted</span></div></div>
+        </div>
+      </div>
+
+      <!-- IFRS 19 forthcoming -->
+      <div class="card" data-tags="2027" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS 19</span><span class="card-title">Subsidiaries without Public Accountability: Disclosures</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">New standard allowing eligible subsidiaries to apply reduced disclosure requirements under full IFRS recognition and measurement.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Eligibility</div><div class="detail-text"><ul><li>No public accountability (not listed; not financial institution that holds assets in fiduciary capacity for broad group)</li><li>Parent produces publicly available IFRS consolidated financials</li><li>All shareholders with voting rights have approved use of IFRS 19</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Relief Areas</div><div class="detail-text">Reduced disclosures across approximately 17 standards including IFRS 2, IFRS 3, IFRS 7, IFRS 13, IAS 19, IAS 24, IAS 36, IAS 38. Recognition and measurement: full IFRS still applies.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2027 | Early adoption: permitted</span></div></div>
+        </div>
+      </div>
+
+      <!-- Rate-regulated Activities -->
+      <div class="card" data-tags="2027 2028" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS RRA</span><span class="card-title">Rate-regulated Activities (Project — Standard under development)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Comprehensive standard for entities subject to rate regulation, replacing IFRS 14. Final standard expected; effective date TBC (possibly 2028+).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Project Status (as at mid-2025)</div><div class="detail-text">The IASB has been developing a comprehensive standard on rate-regulated activities. An Exposure Draft was issued. Final standard timing is uncertain. Verify current project status at ifrs.org/projects.</div></div>
+          <div class="detail-section"><div class="detail-label">Expected Scope</div><div class="detail-text">Entities subject to defined rate regulation — utilities, infrastructure, telecos in regulated markets. Would require recognition of regulatory assets and liabilities not currently on balance sheet under other IFRS.</div></div>
+          <div class="detail-section"><div class="detail-label">Expected Effective Date</div><div class="detail-text"><span class="effective-badge future">TBC — estimated 2028 or later. Verify at ifrs.org</span></div></div>
+        </div>
+      </div>
+
+      <!-- Amendments to IAS 21 — Lack of Exchangeability -->
+      <div class="card" data-tags="2026" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IAS 21 Amd</span><span class="card-title">Amendments to IAS 21 — Lack of Exchangeability</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies how to determine the exchange rate when a currency lacks exchangeability and how to disclose this fact.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Changes</div><div class="detail-text"><ul><li>A currency is not exchangeable when it cannot be exchanged into another currency at a measurement date through a normal administrative process</li><li>Use an estimated exchange rate (described in amendment) when currency lacks exchangeability</li><li>Disclosure required: nature and reason for lack of exchangeability; quantitative information about estimated rates used; and potential effect on financial statements</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2025 | Early adoption: permitted</span> — Note: Effective 2025; recently effective; verify if applied.</div></div>
+        </div>
+      </div>
+
+      <!-- Amendments to IFRS 9 and IFRS 7 — Financial Instruments with ESG features -->
+      <div class="card" data-tags="2026" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS 9 Amd</span><span class="card-title">Amendments to IFRS 9 and IFRS 7 — Financial Instruments with ESG-linked Features</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Addresses accounting for financial instruments with features linked to ESG or other non-financial variables (e.g., sustainability-linked loans).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Changes</div><div class="detail-text"><ul><li>Clarifies the SPPI test for instruments with contingent features (step-up/step-down rates linked to ESG metrics)</li><li>Instruments may still pass SPPI if the contingent feature is a de minimis or non-genuine element</li><li>IFRS 7 disclosures enhanced for instruments with contingent features</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2026 | Early adoption: permitted</span></div></div>
+        </div>
+      </div>
+
+      <!-- Power Purchase Agreements — IFRS 9 Amd -->
+      <div class="card" data-tags="2026" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS 9 PPA</span><span class="card-title">Amendments to IFRS 9 — Contracts to Buy or Sell a Non-financial Item (Power Purchase Agreements)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies which contracts to buy or sell non-financial items must be accounted for as financial instruments under IFRS 9 (own-use exemption scope).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Background</div><div class="detail-text">Power Purchase Agreements (PPAs) and similar renewable energy contracts have created uncertainty about whether the own-use exemption in IFRS 9 applies or whether the contracts are financial instruments at FVTPL.</div></div>
+          <div class="detail-section"><div class="detail-label">Key Changes</div><div class="detail-text"><ul><li>New guidance on applying the own-use exemption to contracts settled net in cash but intended for own use</li><li>Permits, in limited circumstances, designation at FVOCI for certain contracts that do not qualify for own-use</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2026 | Early adoption: permitted</span></div></div>
+        </div>
+      </div>
+
+      <!-- Amendments to IAS 37 — Provisions -->
+      <div class="card" data-tags="2027" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IAS 37 Amd</span><span class="card-title">Business Combinations under Common Control (BCUCC Project)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Long-running IASB project to establish IFRS 3-aligned guidance for business combinations between entities under common control — currently a gap in IFRS.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Project Status</div><div class="detail-text">The IASB issued a Discussion Paper in 2020 and has been deliberating. A final standard is not yet issued. Under current IFRS, there is no specific guidance, so IAS 8 hierarchy applies. I do not have a verified final standard or confirmed effective date as at mid-2025.</div></div>
+          <div class="detail-section"><div class="detail-label">Expected Approach</div><div class="detail-text">Expected to allow two methods: (a) acquisition method (IFRS 3) for transactions affecting NCI; (b) predecessor method for other transactions. Verify current project status at ifrs.org.</div></div>
+          <div class="detail-section"><div class="detail-label">Expected Effective Date</div><div class="detail-text"><span class="effective-badge future">TBC — project ongoing. Verify at ifrs.org/projects</span></div></div>
+        </div>
+      </div>
+
+      <!-- Annual Improvements 2023–2025 -->
+      <div class="card" data-tags="2026" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">Annual Impr.</span><span class="card-title">Annual Improvements to IFRS Accounting Standards — 2023–2025 Cycle</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Omnibus amendments to multiple standards arising from the IASB's annual improvements process — clarifications and minor changes.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Standards Affected (illustrative — verify with IASB)</div><div class="detail-text">Typically includes targeted amendments to IAS 21, IAS 32, IFRS 1, IFRS 7, IFRS 9. Specific amendments depend on issues raised during the cycle. Verify the final package at ifrs.org.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">Generally 1 January 2026. Verify specific effective dates per standard amended.</span></div></div>
+        </div>
+      </div>
+
+      <!-- IFRS S1 / S2 context note -->
+      <div class="card" data-tags="2026 2027" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IFRS S1/S2</span><span class="card-title">ISSB Sustainability Disclosure Standards (Context Note)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Not accounting standards but sustainability disclosure standards from the IASB-affiliated ISSB — increasingly required or referenced alongside IFRS financial statements.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">IFRS S1 — General Requirements</div><div class="detail-text">General requirements for disclosure of sustainability-related financial information. Requires disclosure of material sustainability-related risks and opportunities across governance, strategy, risk management, and metrics/targets.</div></div>
+          <div class="detail-section"><div class="detail-label">IFRS S2 — Climate-related Disclosures</div><div class="detail-text">Specific requirements for climate-related disclosures, including Scope 1, 2, and 3 greenhouse gas emissions, climate scenario analysis, and TCFD-aligned disclosures.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">Issued June 2023. Adoption varies by jurisdiction — not yet mandatory in PNG. Verify local regulatory requirements.</span></div></div>
+        </div>
+      </div>
+
+      <!-- Amendments to IAS 32 classification of liabilities -->
+      <div class="card" data-tags="2026" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IAS 1 Amd</span><span class="card-title">Amendments to IAS 1 — Classification of Liabilities as Current or Non-current (and Non-current Liabilities with Covenants)</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Clarifies that the right to defer settlement must exist at the end of the reporting period, and addresses covenants tested after the reporting date.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Changes (effective 2024 — recently effective)</div><div class="detail-text"><ul><li>Only the right to defer settlement at the end of the reporting period matters (not management's intention)</li><li>Terms that could accelerate repayment (covenants) assessed at reporting date</li><li>Non-current liabilities with covenants tested after reporting date: remain non-current but disclose risk of reclassification</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">1 January 2024 — recently effective; verify comparative treatment in 2025/2026 reports</span></div></div>
+        </div>
+      </div>
+
+      <!-- Goodwill & Impairment project -->
+      <div class="card" data-tags="2027 2028" onclick="toggleCard(this)">
+        <div class="card-header future"><span class="card-code">IAS 36 Rev.</span><span class="card-title">Goodwill and Impairment — IASB Research Project</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Major IASB project exploring whether to reintroduce amortisation of goodwill, enhance impairment disclosures, or simplify the impairment test.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Project Status</div><div class="detail-text">The IASB has been deliberating on improving the information provided about goodwill and acquisitions. Targeted amendments to IFRS 3 and IAS 36 disclosures are expected. Goodwill amortisation reintroduction — the IASB has provisionally decided NOT to reintroduce amortisation (as at mid-2025 information). Verify at ifrs.org.</div></div>
+          <div class="detail-section"><div class="detail-label">Expected Outcome</div><div class="detail-text">Enhanced disclosure requirements for business combinations and goodwill, possibly including management's investment thesis at acquisition date and subsequent performance against it.</div></div>
+          <div class="detail-section"><div class="detail-label">Effective Date</div><div class="detail-text"><span class="effective-badge future">TBC — final amendments not yet issued as at mid-2025. Monitor ifrs.org</span></div></div>
+        </div>
+      </div>
+
+    </div><!-- /grid-future -->
+  </div><!-- /panel-future -->
+
+
+  <!-- ═══════════════════════════════════════════════
+       Q&A PANEL
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-qa" class="panel">
+    <div class="section-intro" style="border-left-color:#2e7d6b;background:#1a3830;">
+      <div class="section-intro-icon">❓</div>
+      <div>
+        <h2>Common IFRS Questions &amp; Answers</h2>
+        <p>Practical questions frequently encountered by accountants, CFOs, and finance professionals — with clear explanations. Verify all technical positions with current IASB standards and qualified advisors.</p>
+      </div>
+    </div>
+    <div class="disclaimer">⚠ <strong>I am an AI, not a certified public accountant or attorney.</strong> These answers are educational summaries. Always verify with current IFRS standards and a qualified professional. Standards are subject to amendment.</div>
+
+    <div style="display:flex;gap:10px;margin:16px 0;flex-wrap:wrap;">
+      <button class="filter-btn active" onclick="filterCards('qa','all',this)">All Topics</button>
+      <button class="filter-btn" onclick="filterCards('qa','recognition',this)">Recognition &amp; Measurement</button>
+      <button class="filter-btn" onclick="filterCards('qa','presentation',this)">Presentation</button>
+      <button class="filter-btn" onclick="filterCards('qa','consolidation',this)">Consolidation</button>
+      <button class="filter-btn" onclick="filterCards('qa','financial',this)">Financial Instruments</button>
+      <button class="filter-btn" onclick="filterCards('qa','transition',this)">Transition &amp; Adoption</button>
+      <button class="filter-btn" onclick="filterCards('qa','practical',this)">Practical Issues</button>
+      <span class="result-count" id="qa-count"></span>
+    </div>
+    <div id="no-results-qa" class="no-results">No matching questions found.</div>
+
+    <div class="cards-grid" id="grid-qa">
+
+      <!-- Q1 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 1</span><span class="card-title">When should revenue be recognised under IFRS 15?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Revenue is recognised when (or as) a performance obligation is satisfied — i.e., when control of a good or service transfers to the customer.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Explanation</div><div class="detail-text">IFRS 15 uses a five-step model: (1) identify the contract; (2) identify performance obligations; (3) determine the transaction price; (4) allocate the price to obligations; (5) recognise revenue when each obligation is satisfied. Revenue is recognised <em>over time</em> if the customer simultaneously receives and consumes benefits, or the entity has a right to payment for work completed to date with no alternative use. Otherwise, revenue is recognised at a <em>point in time</em> when control transfers.</div></div>
+          <div class="detail-section"><div class="detail-label">Common Pitfall</div><div class="detail-text">Confusing delivery of goods with transfer of control. Control can transfer before or after physical delivery depending on contract terms (e.g., bill-and-hold arrangements, consignment stock).</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 15 — Revenue from Contracts with Customers (effective 1 January 2018)</div></div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 2</span><span class="card-title">What is the difference between a finance lease and an operating lease under IFRS 16?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Under IFRS 16, the lessee/lessor distinction still matters for lessors, but lessees must now recognise almost all leases on the balance sheet.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Explanation</div><div class="detail-text"><strong>For Lessees:</strong> IFRS 16 eliminated the operating/finance distinction for lessees. All leases (except short-term ≤12 months and low-value assets) are recognised as a Right-of-Use (ROU) asset and lease liability. The P&amp;L shows depreciation on the ROU asset and interest on the lease liability — front-loaded compared to straight-line rent expense under the old IAS 17.<br><br><strong>For Lessors:</strong> The finance/operating distinction remains. A finance lease transfers substantially all risks and rewards of ownership; the lessor derecognises the asset and records a receivable. An operating lease keeps the asset on the lessor's books; rental income is recognised on a straight-line basis.</div></div>
+          <div class="detail-section"><div class="detail-label">Practical Impact</div><div class="detail-text">Lessees now show higher assets and liabilities, higher EBITDA (rent replaced by depreciation + interest), but lower profit in early years. DSCR and leverage ratios are commonly affected.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 16 — Leases (effective 1 January 2019)</div></div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 3</span><span class="card-title">How is goodwill tested for impairment under IAS 36?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Goodwill is allocated to Cash Generating Units (CGUs) and tested for impairment annually — not amortised.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Explanation</div><div class="detail-text">Goodwill cannot be tested in isolation — it must be allocated to the smallest group of assets that generates largely independent cash flows (a CGU or group of CGUs). Each year, the carrying amount of the CGU (including allocated goodwill) is compared to its recoverable amount (the higher of Fair Value Less Costs of Disposal and Value in Use). If carrying amount exceeds recoverable amount, an impairment loss is recognised — first reducing goodwill, then other assets pro-rata.</div></div>
+          <div class="detail-section"><div class="detail-label">Key Rules</div><div class="detail-text"><ul><li>Goodwill impairment is <strong>irreversible</strong> — once written down, cannot be reversed</li><li>Annual testing required even if no impairment indicators</li><li>Value in Use uses pre-tax cash flows discounted at a pre-tax rate</li><li>Sensitivity disclosures required for CGUs where reasonable change in assumption would cause impairment</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 36 — Impairment of Assets; IFRS 3 — Business Combinations</div></div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 4</span><span class="card-title">What is the Expected Credit Loss (ECL) model under IFRS 9?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">The ECL model requires entities to recognise credit losses before a default event occurs, based on forward-looking information.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">The Three-Stage Model</div><div class="detail-text"><ul><li><strong>Stage 1 (Performing):</strong> No significant increase in credit risk since origination → recognise 12-month ECL</li><li><strong>Stage 2 (Underperforming):</strong> Significant increase in credit risk → recognise lifetime ECL (no interest income adjustment)</li><li><strong>Stage 3 (Credit-impaired):</strong> Objective evidence of impairment → recognise lifetime ECL; interest income calculated on net carrying amount</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Simplified Approach</div><div class="detail-text">For trade receivables, contract assets, and lease receivables without a significant financing component, entities may always use lifetime ECL (no staging required). A provision matrix (aging-based) is commonly used in practice.</div></div>
+          <div class="detail-section"><div class="detail-label">Common Pitfall</div><div class="detail-text">ECL must incorporate forward-looking macroeconomic information (GDP growth, unemployment forecasts) — it is not simply a historical loss rate.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 9 — Financial Instruments (effective 1 January 2018)</div></div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="card" data-tags="presentation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 5</span><span class="card-title">How are deferred tax assets and liabilities recognised under IAS 12?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Deferred tax arises from temporary differences between an asset or liability's carrying amount and its tax base.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Explanation</div><div class="detail-text">IAS 12 uses the balance sheet liability method. A <strong>Deferred Tax Liability (DTL)</strong> arises when the carrying amount of an asset exceeds its tax base (taxable temporary difference) — recognise in almost all cases. A <strong>Deferred Tax Asset (DTA)</strong> arises when the carrying amount of an asset is less than its tax base, or when tax losses can be carried forward — recognise only to the extent it is <em>probable</em> that future taxable profits will be available.</div></div>
+          <div class="detail-section"><div class="detail-label">Key Exceptions (No Deferred Tax)</div><div class="detail-text"><ul><li>Initial recognition of goodwill</li><li>Initial recognition of asset/liability in a transaction that is not a business combination and affects neither accounting nor taxable profit at the time</li><li>Investments in subsidiaries/associates where the entity controls the timing of reversal and reversal is not probable in the foreseeable future (DTL only)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Measurement</div><div class="detail-text">Use enacted or substantively enacted tax rates at the reporting date expected to apply when temporary differences reverse. Do not discount deferred tax balances.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 12 — Income Taxes</div></div>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="card" data-tags="consolidation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 6</span><span class="card-title">When must an entity consolidate another entity under IFRS 10?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Consolidation is required when an investor controls an investee — based on a three-element control test, not just ownership percentage.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">The Control Test</div><div class="detail-text">An investor controls an investee when it has ALL three of: <ul><li><strong>Power</strong> over the investee (existing rights that give current ability to direct relevant activities)</li><li><strong>Exposure</strong> to variable returns from its involvement</li><li><strong>Ability</strong> to use power to affect those variable returns</li></ul>All three must exist simultaneously. Majority ownership (>50%) typically confers control but is not the only path.</div></div>
+          <div class="detail-section"><div class="detail-label">Special Cases</div><div class="detail-text"><ul><li><strong>De facto control:</strong> Possible with less than majority voting rights if other shareholders are widely dispersed</li><li><strong>Investment entities:</strong> Exempt from consolidation — measure subsidiaries at FVTPL instead</li><li><strong>Structured entities:</strong> May be controlled without equity ownership</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 10 — Consolidated Financial Statements; IFRS 12 — Disclosure of Interests in Other Entities</div></div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 7</span><span class="card-title">What is the difference between a provision and a contingent liability under IAS 37?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">A provision is recognised on the balance sheet; a contingent liability is only disclosed in notes (or not disclosed if remote).</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Provision — Recognise When</div><div class="detail-text"><ul><li>Present obligation (legal or constructive) from a past event</li><li>Probable outflow of economic resources (more likely than not — generally >50%)</li><li>Reliable estimate can be made</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Contingent Liability — Disclose When</div><div class="detail-text">A possible obligation whose existence depends on future uncertain events outside the entity's control; OR a present obligation where outflow is not probable OR amount cannot be reliably measured. <strong>Disclose</strong> in notes unless the possibility of outflow is remote (no disclosure needed if remote).</div></div>
+          <div class="detail-section"><div class="detail-label">Common Pitfall</div><div class="detail-text">Management's intent to contest a claim does not eliminate the obligation. If a court judgment or regulatory finding has created a present obligation, a provision is likely required even if an appeal is lodged.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 37 — Provisions, Contingent Liabilities and Contingent Assets</div></div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 8</span><span class="card-title">How are property, plant and equipment measured after initial recognition under IAS 16?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Entities choose either the cost model or the revaluation model — applied consistently to each class of PPE.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Cost Model</div><div class="detail-text">Carried at cost less accumulated depreciation and impairment losses. Simpler to apply; no need for regular valuations.</div></div>
+          <div class="detail-section"><div class="detail-label">Revaluation Model</div><div class="detail-text">Carried at fair value at revaluation date, less subsequent depreciation and impairment. Revaluations must be regular enough so that carrying amount does not differ materially from fair value. Upward revaluations go to OCI (revaluation surplus in equity); downward revaluations go to P&amp;L (unless reversing a prior surplus).</div></div>
+          <div class="detail-section"><div class="detail-label">Component Approach</div><div class="detail-text">Each significant component with a different useful life must be depreciated separately. For example, an aircraft's airframe, engines, and interior fittings may each have distinct useful lives.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 16 — Property, Plant and Equipment; IAS 36 — Impairment of Assets</div></div>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="card" data-tags="financial" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 9</span><span class="card-title">How are financial instruments classified and measured under IFRS 9?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Classification depends on the entity's business model for managing financial assets and the contractual cash flow characteristics of the instrument.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Financial Assets — Three Categories</div><div class="detail-text"><ul><li><strong>Amortised Cost:</strong> Business model is "hold to collect" AND cash flows are solely payments of principal and interest (SPPI). Examples: loans, trade receivables held to maturity.</li><li><strong>Fair Value through OCI (FVOCI):</strong> Business model is "hold to collect and sell" AND SPPI test passed; OR equity instruments designated at FVOCI (gains/losses never recycled to P&amp;L).</li><li><strong>Fair Value through P&amp;L (FVTPL):</strong> All others, including derivatives and trading portfolios. Also available as an irrevocable designation to eliminate accounting mismatch.</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Financial Liabilities</div><div class="detail-text">Generally measured at amortised cost. Exceptions: liabilities held for trading, derivatives, and those designated at FVTPL. For FVTPL liabilities, own credit risk changes go to OCI (not P&amp;L).</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 9 — Financial Instruments; IFRS 7 — Financial Instruments: Disclosures</div></div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="card" data-tags="presentation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 10</span><span class="card-title">What is the difference between functional currency and presentation currency?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Functional currency is the currency of the primary economic environment in which an entity operates; presentation currency is the currency chosen for reporting.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Functional Currency</div><div class="detail-text">Determined by facts — primarily the currency that influences sales prices, labour, and material costs. Cannot be freely chosen. Indicators include: currency of pricing, financing, and receipts retained. An entity may only have one functional currency.</div></div>
+          <div class="detail-section"><div class="detail-label">Presentation Currency</div><div class="detail-text">An entity may present its financial statements in any currency. If presentation currency differs from functional currency, translate using the closing rate for assets/liabilities and average rate for income/expenses. Differences go to OCI as Foreign Currency Translation Reserve (FCTR).</div></div>
+          <div class="detail-section"><div class="detail-label">Common Issue</div><div class="detail-text">Entities in dollarised economies or with USD-denominated revenues often face judgement about whether their functional currency is USD or local currency. The determination follows substance, not management preference.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 21 — The Effects of Changes in Foreign Exchange Rates</div></div>
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="card" data-tags="practical" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 11</span><span class="card-title">How should borrowing costs be treated for a qualifying asset?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Borrowing costs directly attributable to acquiring or constructing a qualifying asset must be capitalised — not expensed.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Qualifying Asset</div><div class="detail-text">An asset that necessarily takes a substantial period of time to get ready for its intended use or sale. Examples: self-constructed factory, major infrastructure project, bespoke vessel. Inventories manufactured in large quantities on a repetitive basis are generally not qualifying assets.</div></div>
+          <div class="detail-section"><div class="detail-label">Capitalisation Rate</div><div class="detail-text"><ul><li><strong>Specific borrowings:</strong> Actual interest cost less investment income earned on temporarily invested funds</li><li><strong>General borrowings:</strong> Weighted average cost of general borrowings × average carrying amount of qualifying asset during the period</li></ul>Capitalisation begins when: expenditures are incurred, borrowing costs are incurred, AND activities to prepare the asset are in progress. Suspend during extended interruptions; cease when substantially complete.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 23 — Borrowing Costs</div></div>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="card" data-tags="transition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 12</span><span class="card-title">What are the key steps for a first-time adopter of IFRS?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">First-time adoption requires an opening IFRS balance sheet and retrospective application of IFRS effective at the end of the first IFRS reporting period.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Steps</div><div class="detail-text"><ol style="padding-left:20px;"><li>Determine the <strong>date of transition</strong> (beginning of earliest comparative period presented)</li><li>Prepare an <strong>opening IFRS Statement of Financial Position</strong> at the transition date</li><li>Apply all IFRS effective at the <strong>end of the first IFRS reporting period</strong> retrospectively (with mandatory exceptions and optional exemptions)</li><li>Prepare <strong>reconciliation statements</strong>: equity at transition date, equity at end of comparative period, and total comprehensive income for the comparative period</li></ol></div></div>
+          <div class="detail-section"><div class="detail-label">Common Optional Exemptions</div><div class="detail-text">Deemed cost for PPE (use fair value or previous GAAP value as deemed cost); cumulative translation differences (reset FCTR to zero); share-based payment transactions; leases; business combinations before transition date.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 1 — First-time Adoption of International Financial Reporting Standards</div></div>
+        </div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="card" data-tags="presentation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 13</span><span class="card-title">When can liabilities be classified as non-current?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">A liability is non-current only if the entity has the right to defer settlement for at least 12 months after the reporting date — assessed at the reporting date itself.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Principle (Post-2024 Amendment)</div><div class="detail-text">Following amendments to IAS 1 (effective 1 January 2024), the classification depends solely on whether the right to defer exists at the end of the reporting period — not on management's intention or likelihood of exercise. If covenants are tested <em>after</em> the reporting date, the liability may still be non-current if no breach has occurred by reporting date, but enhanced disclosures are required about the risk of reclassification.</div></div>
+          <div class="detail-section"><div class="detail-label">Practical Issue</div><div class="detail-text">Revolving credit facilities and term loans with financial covenants require careful analysis. If a breach at reporting date gives the lender the right to demand repayment, the debt must be classified as current — even if a waiver is obtained after the reporting date (a non-adjusting event).</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 1 — Presentation of Financial Statements (amended 2023, effective 1 January 2024)</div></div>
+        </div>
+      </div>
+
+      <!-- Q14 -->
+      <div class="card" data-tags="consolidation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 14</span><span class="card-title">How is the equity method applied for associates under IAS 28?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Under the equity method, the investment is initially recorded at cost and adjusted for the investor's share of post-acquisition profits, losses, and OCI.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Significant Influence</div><div class="detail-text">Presumed when the investor holds 20%–50% of voting power (rebuttable). Other indicators: board representation, participation in policy-making, material intercompany transactions, interchange of personnel, provision of essential technical information.</div></div>
+          <div class="detail-section"><div class="detail-label">Mechanics</div><div class="detail-text"><ul><li>Investment initially at cost (including transaction costs)</li><li>Adjust carrying amount for share of associate's profit/loss → P&amp;L; and OCI → OCI</li><li>Dividends received reduce the carrying amount</li><li>Eliminate unrealised profits on upstream and downstream transactions (to the extent of investor's interest)</li><li>If share of losses exceeds carrying amount: reduce to zero; continue recognising losses only if entity has obligations</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 28 — Investments in Associates and Joint Ventures</div></div>
+        </div>
+      </div>
+
+      <!-- Q15 -->
+      <div class="card" data-tags="practical" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 15</span><span class="card-title">How are inventory write-downs and reversals handled under IAS 2?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Inventories are measured at the lower of cost and net realisable value (NRV). Write-downs are expensed; reversals are permitted if NRV subsequently recovers.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Net Realisable Value</div><div class="detail-text">The estimated selling price in the ordinary course of business <em>less</em> estimated costs of completion and estimated costs necessary to make the sale. Assessed item by item (or by groups of similar items for practical purposes).</div></div>
+          <div class="detail-section"><div class="detail-label">Write-down and Reversal</div><div class="detail-text">Write inventory down to NRV when cost exceeds NRV — recognised as an expense in the period. If in a subsequent period the NRV increases (e.g., selling price recovers), the write-down may be reversed up to the original write-down amount. The reversal is recognised as a reduction in the cost of inventories expense.</div></div>
+          <div class="detail-section"><div class="detail-label">Cost Formulas</div><div class="detail-text">IAS 2 permits: FIFO (First-In, First-Out) or Weighted Average Cost. <strong>LIFO is prohibited under IFRS.</strong> The same cost formula must be applied to all inventories of similar nature and use.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 2 — Inventories</div></div>
+        </div>
+      </div>
+
+      <!-- Q16 -->
+      <div class="card" data-tags="practical" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 16</span><span class="card-title">What disclosures are required for related party transactions under IAS 24?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">IAS 24 requires disclosure of related party relationships and transactions regardless of whether a price was charged, to highlight potential influence on financial results.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Who is a Related Party?</div><div class="detail-text">Parent; subsidiaries; associates; joint ventures; key management personnel (KMP) and their close family members; entities controlled or significantly influenced by KMP or their close family; post-employment benefit plans of the reporting entity.</div></div>
+          <div class="detail-section"><div class="detail-label">Required Disclosures</div><div class="detail-text"><ul><li>Nature of the relationship</li><li>Description and amounts of transactions</li><li>Outstanding balances: terms, conditions, guarantees, settlement method</li><li>Provisions for doubtful debts related to outstanding balances</li><li>KMP compensation: short-term benefits, post-employment, termination, share-based payment — by category</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Government-related Entities</div><div class="detail-text">Partial exemption from the detailed disclosure requirements for transactions with government-controlled entities, if certain conditions are met. General nature and significance still required.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 24 — Related Party Disclosures</div></div>
+        </div>
+      </div>
+
+      <!-- Q17 -->
+      <div class="card" data-tags="presentation" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 17</span><span class="card-title">What changes does IFRS 18 introduce to the income statement from 2027?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">IFRS 18 (replacing IAS 1 from 1 January 2027) restructures the income statement into five defined categories and introduces new required subtotals.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Five Income Statement Categories</div><div class="detail-text"><ol style="padding-left:20px;"><li><strong>Operating</strong> — core business activities</li><li><strong>Investing</strong> — returns from assets not integral to main business</li><li><strong>Financing — integral to main business</strong> (e.g., insurance investment returns for insurers)</li><li><strong>Financing — not integral</strong> — borrowing costs and financing activities</li><li><strong>Income tax</strong></li></ol></div></div>
+          <div class="detail-section"><div class="detail-label">New Required Subtotals</div><div class="detail-text"><ul><li><strong>Operating profit</strong> — explicitly defined for the first time in IFRS</li><li><strong>Profit before financing and income tax</strong> — captures operating + investing categories</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Management Performance Measures (MPMs)</div><div class="detail-text">Entities using non-IFRS measures (e.g., adjusted EBITDA, adjusted EPS) in public communications must disclose a labelled reconciliation to the closest IFRS line item, with explanations of each adjustment and the income tax and NCI effects.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 18 — Presentation and Disclosure in Financial Statements (effective 1 January 2027; early adoption permitted). Verify current status at ifrs.org.</div></div>
+        </div>
+      </div>
+
+      <!-- Q18 -->
+      <div class="card" data-tags="practical" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 18</span><span class="card-title">How should an entity account for defined benefit pension obligations under IAS 19?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Defined benefit obligations are measured using the Projected Unit Credit method; remeasurements go to OCI and are never recycled to profit or loss.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Measurement of the Net Obligation</div><div class="detail-text">Net Defined Benefit Liability (Asset) = Present Value of Defined Benefit Obligation (DBO) − Fair Value of Plan Assets. An actuarial valuation using the Projected Unit Credit method is required. The discount rate is determined by reference to high-quality corporate bond yields (or government bonds in markets with no deep corporate bond market).</div></div>
+          <div class="detail-section"><div class="detail-label">P&amp;L Components</div><div class="detail-text"><ul><li>Current service cost</li><li>Past service cost (recognised immediately on plan amendment/curtailment)</li><li>Net interest on net defined benefit liability/asset</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">OCI Components (Remeasurements — Not Recycled)</div><div class="detail-text"><ul><li>Actuarial gains and losses on the DBO</li><li>Return on plan assets (excluding net interest)</li><li>Effect of the asset ceiling (IFRIC 14)</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 19 — Employee Benefits; IFRIC 14 — IAS 19: The Limit on a Defined Benefit Asset</div></div>
+        </div>
+      </div>
+
+      <!-- Q19 -->
+      <div class="card" data-tags="recognition" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 19</span><span class="card-title">What are the criteria for capitalising development costs as intangible assets under IAS 38?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Development costs are capitalised only when all six specified criteria are met; research costs are always expensed.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Research vs Development</div><div class="detail-text"><strong>Research phase:</strong> Original and planned investigation to gain new knowledge — always expense. <strong>Development phase:</strong> Application of research findings to a plan or design — capitalise IF all six criteria are met simultaneously.</div></div>
+          <div class="detail-section"><div class="detail-label">The Six Criteria (All Must Be Met)</div><div class="detail-text"><ol style="padding-left:20px;"><li>Technical <strong>feasibility</strong> of completing the asset</li><li>Management's <strong>intention</strong> to complete and use/sell the asset</li><li><strong>Ability</strong> to use or sell the asset</li><li>The asset will generate <strong>probable future economic benefits</strong></li><li>Availability of adequate <strong>technical, financial, and other resources</strong> to complete the project</li><li><strong>Reliable measurement</strong> of expenditure attributable to the asset during development</li></ol></div></div>
+          <div class="detail-section"><div class="detail-label">Common Pitfall</div><div class="detail-text">Internally generated brands, mastheads, publishing titles, customer lists, and goodwill may never be capitalised. Internally generated computer software may qualify for capitalisation in the development phase.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IAS 38 — Intangible Assets</div></div>
+        </div>
+      </div>
+
+      <!-- Q20 -->
+      <div class="card" data-tags="practical" onclick="toggleCard(this)">
+        <div class="card-header ias"><span class="card-code">Q 20</span><span class="card-title">How is fair value measured under IFRS 13?</span><span class="toggle-icon">▼</span></div>
+        <div class="card-summary">Fair value is an exit price — the price received to sell an asset or paid to transfer a liability in an orderly transaction between market participants at the measurement date.</div>
+        <div class="card-body">
+          <div class="detail-section"><div class="detail-label">Key Concept: Exit Price</div><div class="detail-text">Fair value reflects a hypothetical transaction from the perspective of a market participant holding the asset or owing the liability — not an entity-specific value. The principal market (or most advantageous market) is used. Transaction costs are not included in fair value (but may affect the measurement of net realisable value under other standards).</div></div>
+          <div class="detail-section"><div class="detail-label">The Fair Value Hierarchy</div><div class="detail-text"><ul><li><strong>Level 1:</strong> Quoted prices in active markets for identical assets or liabilities — highest reliability; use without adjustment</li><li><strong>Level 2:</strong> Observable inputs other than Level 1 — comparable asset prices, interest rate curves, credit spreads</li><li><strong>Level 3:</strong> Unobservable inputs — entity's own assumptions about what market participants would use, including DCF models, earnings multiples. Highest judgement and disclosure requirements.</li></ul></div></div>
+          <div class="detail-section"><div class="detail-label">Valuation Techniques</div><div class="detail-text">Market approach (comparable transactions); Income approach (DCF, option pricing); Cost approach (replacement cost). Use the technique that maximises observable inputs. Consistency in technique selection is required; changes treated as a change in accounting estimate.</div></div>
+          <div class="detail-section"><div class="detail-label">Standard Reference</div><div class="detail-text">IFRS 13 — Fair Value Measurement</div></div>
+        </div>
+      </div>
+
+    </div><!-- /grid-qa -->
+  </div><!-- /panel-qa -->
+
+</div><!-- /main-content -->
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER — COMPILER CREDIT
+═══════════════════════════════════════════════ -->
+<footer style="background:linear-gradient(135deg,#0d1f3c 0%,#172a4e 100%);color:#fff;padding:48px 40px 36px;border-top:4px solid #c9a84c;margin-top:40px;">
+  <div style="max-width:1400px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start;">
+
+      <div style="flex:2;min-width:280px;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#e8c97a;font-weight:700;margin-bottom:6px;">
+          ⚖ IFRS Standards Navigator
+        </div>
+        <div style="font-size:14pt;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:18px;">
+          A comprehensive interactive reference covering all active IFRS, IAS, IFRIC, and SIC standards,
+          together with forthcoming standards and amendments for 2026–2028, and a common Q&amp;A reference
+          for finance professionals.
+        </div>
+        <div style="background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.35);border-radius:8px;padding:14px 18px;font-size:13pt;color:rgba(255,255,255,0.7);line-height:1.6;">
+          ⚠ <strong style="color:#e8c97a;">Disclaimer:</strong> This reference is for educational and professional guidance purposes only.
+          All information should be independently verified against current IASB-issued standards, jurisdiction-specific
+          regulatory requirements, and the advice of qualified professionals. Standards are subject to amendment.
+          Verify at <a href="https://www.ifrs.org" target="_blank" style="color:#e8c97a;">ifrs.org</a>.
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:260px;border-left:2px solid rgba(201,168,76,0.3);padding-left:36px;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#e8c97a;margin-bottom:16px;letter-spacing:0.04em;text-transform:uppercase;">Compiled &amp; Authored By</div>
+
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e8c97a);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#0d1f3c;flex-shrink:0;">RC</div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;line-height:1.2;">Richard Mimis Castillo</div>
+            <div style="font-size:13pt;color:#e8c97a;font-weight:600;margin-top:3px;">CPA · ASA · AIA · MBA</div>
+          </div>
+        </div>
+
+        <div style="font-size:13pt;color:rgba(255,255,255,0.72);line-height:1.75;">
+
+          <div style="border-top:1px solid rgba(201,168,76,0.25);padding-top:12px;font-style:italic;color:rgba(255,255,255,0.55);font-size:12pt;">
+            Fractional CFO &amp; Financial Advisory Professional
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+      <div style="font-size:12pt;color:rgba(255,255,255,0.4);">
+        © 2025 Richard Mimis Castillo. All rights reserved. For professional and educational use.
+      </div>
+      <div style="font-size:12pt;color:rgba(255,255,255,0.4);">
+        Reference Year: 2025 · Standards as at mid-2025 · Verify all effective dates at ifrs.org
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script>
+// ════════════════════════════════════════════
+// IFRS NAVIGATOR — ENHANCED SCRIPT v2
+// ════════════════════════════════════════════
+
+const TABS = ['ifrs','ias','ifric','sic','future','qa'];
+
+// ── TAB SWITCHING ──
+function switchTab(tab, e) {
+  if (e) e.stopPropagation();
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  const btn = document.querySelector(`[onclick="switchTab('${tab}',event)"]`);
+  if (btn) btn.classList.add('active');
+  updateTabBadge(tab);
+  try { localStorage.setItem('ifrs_last_tab', tab); } catch(e){}
+}
+
+// ── TOGGLE CARD ──
+function toggleCard(card) {
+  card.classList.toggle('open');
+  const body = card.querySelector('.card-body');
+  if (body) body.classList.toggle('open');
+}
+
+// ── FILTER ──
+function filterCards(gridId, tag, btn) {
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const grid = document.getElementById('grid-' + gridId);
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const tags = card.dataset.tags || '';
+    const show = tag === 'all' || tags.includes(tag);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById(gridId + '-count');
+  if (countEl) countEl.textContent = visible + ' standard' + (visible !== 1 ? 's' : '') + ' shown';
+  const noRes = document.getElementById('no-results-' + gridId);
+  if (noRes) noRes.style.display = visible === 0 ? 'block' : 'none';
+  updateTabBadge(gridId);
+}
+
+// ── GLOBAL SEARCH ──
+function globalSearchFn() {
+  const q = document.getElementById('globalSearch').value.toLowerCase().trim();
+  TABS.forEach(gridId => {
+    const grid = document.getElementById('grid-' + gridId);
+    if (!grid) return;
+    const cards = grid.querySelectorAll('.card');
+    let visible = 0;
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const show = !q || text.includes(q);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const noRes = document.getElementById('no-results-' + gridId);
+    if (noRes) noRes.style.display = (visible === 0 && q) ? 'block' : 'none';
+    const countEl = document.getElementById(gridId + '-count');
+    if (countEl) countEl.textContent = q ? visible + ' result' + (visible !== 1 ? 's' : '') : '';
+    // update tab badge
+    const badge = document.getElementById('cnt-' + gridId);
+    if (badge) badge.textContent = visible;
+  });
+}
+
+// ── EXPAND / COLLAPSE ALL ──
+function expandAll() {
+  const activePanel = document.querySelector('.panel.active');
+  if (!activePanel) return;
+  activePanel.querySelectorAll('.card').forEach(card => {
+    if (card.style.display === 'none') return;
+    card.classList.add('open');
+    const body = card.querySelector('.card-body');
+    if (body) body.classList.add('open');
+  });
+}
+function collapseAll() {
+  const activePanel = document.querySelector('.panel.active');
+  if (!activePanel) return;
+  activePanel.querySelectorAll('.card').forEach(card => {
+    card.classList.remove('open');
+    const body = card.querySelector('.card-body');
+    if (body) body.classList.remove('open');
+  });
+}
+
+// ── TAB COUNT BADGE ──
+function updateTabBadge(tab) {
+  const grid = document.getElementById('grid-' + tab);
+  if (!grid) return;
+  const visible = [...grid.querySelectorAll('.card')].filter(c => c.style.display !== 'none').length;
+  const badge = document.getElementById('cnt-' + tab);
+  if (badge) badge.textContent = visible;
+}
+function updateCount(tab) { updateTabBadge(tab); }
+
+// ── DARK MODE ──
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  document.getElementById('darkModeBtn').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('ifrs_dark', isDark ? '1' : '0'); } catch(e){}
+}
+
+// ── PRINT ──
+function printCurrentTab() {
+  // Show only active panel for print — already handled by CSS
+  window.print();
+}
+
+// ── BOOKMARKS ──
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem('ifrs_bookmarks') || '[]'); } catch(e){ return []; }
+}
+function saveBookmarks(bm) {
+  try { localStorage.setItem('ifrs_bookmarks', JSON.stringify(bm)); } catch(e){}
+}
+function toggleBookmark(btn, e) {
+  e.stopPropagation();
+  const card = btn.closest('.card');
+  const code = card.querySelector('.card-code') ? card.querySelector('.card-code').textContent.trim() : '';
+  const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.trim() : '';
+  const id = code + '::' + title.substring(0,40);
+  let bm = getBookmarks();
+  const idx = bm.findIndex(b => b.id === id);
+  if (idx >= 0) {
+    bm.splice(idx, 1);
+    btn.textContent = '🔖';
+    btn.classList.remove('bookmarked');
+    btn.title = 'Bookmark this standard';
+  } else {
+    bm.push({ id, code, title });
+    btn.textContent = '🏷️';
+    btn.classList.add('bookmarked');
+    btn.title = 'Remove bookmark';
+  }
+  saveBookmarks(bm);
+  renderBookmarkList();
+  updateBmCount();
+}
+function renderBookmarkList() {
+  const list = document.getElementById('bmList');
+  if (!list) return;
+  const bm = getBookmarks();
+  if (bm.length === 0) {
+    list.innerHTML = '<div class="bm-empty">No bookmarks yet.<br>Click the 🔖 on any card header to save it here.</div>';
+    return;
+  }
+  list.innerHTML = bm.map(b => `
+    <div class="bm-item" onclick="jumpToCard('${b.id.replace(/'/g,"\\'")}')">
+      <div class="bm-code">${b.code}</div>
+      <div class="bm-title">${b.title}</div>
+      <button onclick="removeBookmark(event,'${b.id.replace(/'/g,"\\'")}');" style="font-size:11pt;background:none;border:none;color:#888;cursor:pointer;float:right;margin-top:-28px;">✕</button>
+    </div>`).join('');
+}
+function removeBookmark(e, id) {
+  e.stopPropagation();
+  let bm = getBookmarks().filter(b => b.id !== id);
+  saveBookmarks(bm);
+  renderBookmarkList();
+  updateBmCount();
+  refreshBookmarkButtons();
+}
+function updateBmCount() {
+  const n = getBookmarks().length;
+  const el = document.getElementById('bmCount');
+  if (el) el.textContent = n > 0 ? n : '';
+}
+function toggleBookmarkPanel() {
+  document.getElementById('bookmarkPanel').classList.toggle('open');
+  renderBookmarkList();
+}
+function jumpToCard(id) {
+  document.getElementById('bookmarkPanel').classList.remove('open');
+  const allCards = document.querySelectorAll('.card');
+  for (const card of allCards) {
+    const code = card.querySelector('.card-code') ? card.querySelector('.card-code').textContent.trim() : '';
+    const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.trim() : '';
+    const cid = code + '::' + title.substring(0,40);
+    if (cid === id) {
+      // Switch to the right tab
+      const panel = card.closest('.panel');
+      if (panel) {
+        const tabId = panel.id.replace('panel-','');
+        switchTab(tabId);
+      }
+      card.style.display = '';
+      card.classList.add('open');
+      const body = card.querySelector('.card-body');
+      if (body) body.classList.add('open');
+      setTimeout(() => { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 150);
+      return;
+    }
+  }
+}
+function refreshBookmarkButtons() {
+  const bm = getBookmarks();
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {
+    const card = btn.closest('.card');
+    if (!card) return;
+    const code = card.querySelector('.card-code') ? card.querySelector('.card-code').textContent.trim() : '';
+    const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.trim() : '';
+    const id = code + '::' + title.substring(0,40);
+    const isBm = bm.some(b => b.id === id);
+    btn.textContent = isBm ? '🏷️' : '🔖';
+    btn.classList.toggle('bookmarked', isBm);
+    btn.title = isBm ? 'Remove bookmark' : 'Bookmark this standard';
+  });
+}
+
+// ── COPY STANDARD CODE ──
+function copyCode(btn, e) {
+  e.stopPropagation();
+  const card = btn.closest('.card');
+  const code = card.querySelector('.card-code') ? card.querySelector('.card-code').textContent.trim() : '';
+  const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.trim() : '';
+  const text = code + ' — ' + title;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  }).catch(() => {
+    btn.textContent = '⚠ Error';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+}
+
+// ── INJECT BOOKMARK + COPY BUTTONS INTO CARD HEADERS ──
+function injectCardButtons() {
+  const bm = getBookmarks();
+  document.querySelectorAll('.card').forEach(card => {
+    const header = card.querySelector('.card-header');
+    if (!header || header.querySelector('.bookmark-btn')) return;
+
+    const code = card.querySelector('.card-code') ? card.querySelector('.card-code').textContent.trim() : '';
+    const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.trim() : '';
+    const id = code + '::' + title.substring(0,40);
+    const isBm = bm.some(b => b.id === id);
+
+    // Bookmark button
+    const bmBtn = document.createElement('button');
+    bmBtn.className = 'bookmark-btn' + (isBm ? ' bookmarked' : '');
+    bmBtn.textContent = isBm ? '🏷️' : '🔖';
+    bmBtn.title = isBm ? 'Remove bookmark' : 'Bookmark this standard';
+    bmBtn.onclick = (e) => toggleBookmark(bmBtn, e);
+    header.style.position = 'relative';
+    header.appendChild(bmBtn);
+
+    // Copy button
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-code-btn';
+    copyBtn.textContent = 'Copy';
+    copyBtn.title = 'Copy standard code & title';
+    copyBtn.onclick = (e) => copyCode(copyBtn, e);
+    header.appendChild(copyBtn);
+  });
+}
+
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('keydown', function(e) {
+  // Ctrl+K or Cmd+K to focus search
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    const search = document.getElementById('globalSearch');
+    if (search) { search.focus(); search.select(); }
+  }
+  // Escape to close bookmark panel or clear search
+  if (e.key === 'Escape') {
+    const bmp = document.getElementById('bookmarkPanel');
+    if (bmp && bmp.classList.contains('open')) { bmp.classList.remove('open'); return; }
+    const search = document.getElementById('globalSearch');
+    if (search && search.value) {
+      search.value = '';
+      globalSearchFn();
+    }
+  }
+});
+
+// ── BACK TO TOP ──
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  btn.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── INITIALISE ON LOAD ──
+window.addEventListener('DOMContentLoaded', function() {
+  // Restore dark mode
+  try {
+    if (localStorage.getItem('ifrs_dark') === '1') {
+      document.body.classList.add('dark-mode');
+      const btn = document.getElementById('darkModeBtn');
+      if (btn) btn.textContent = '☀️';
+    }
+  } catch(e){}
+
+  // Restore last visited tab
+  try {
+    const lastTab = localStorage.getItem('ifrs_last_tab');
+    if (lastTab && document.getElementById('panel-' + lastTab)) {
+      switchTab(lastTab);
+    }
+  } catch(e){}
+
+  // Init all tab badges
+  TABS.forEach(updateTabBadge);
+
+  // Inject bookmark + copy buttons
+  injectCardButtons();
+
+  // Render bookmark count
+  updateBmCount();
+});
+</script>
+</body>
+</html>
